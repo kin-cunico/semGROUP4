@@ -1,7 +1,9 @@
 # setting up provisional dockerfile
-# TODO: change copied folder to actual folder // fixing
-# TODO: change entrypoint to actual entrypoint // fixing
-FROM openjdk:latest
-COPY ./target/devops-0.1.0.1-jar-with-dependencies.jar /tmp
-WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "devops-0.1.0.1-jar-with-dependencies.jar"]
+FROM openjdk:17
+WORKDIR /app
+
+# Copy the built JAR into the image
+COPY target/semGROUP4-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
