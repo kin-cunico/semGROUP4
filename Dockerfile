@@ -1,7 +1,7 @@
 # setting up provisional dockerfile
-# TODO: change copied folder to actual folder
-# TODO: change entrypoint to actual entrypoint
+# TODO: change copied folder to actual folder // fixing
+# TODO: change entrypoint to actual entrypoint // fixing
 FROM openjdk:latest
-COPY /tmp
+COPY ./target/devops-0.1.0.1-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "/tmp"]
+ENTRYPOINT ["java", "-jar", "devops-0.1.0.1-jar-with-dependencies.jar"]
