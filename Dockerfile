@@ -3,7 +3,7 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copy the built JAR into the image
-COPY target/semGROUP4-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
+COPY target/semGROUP4-0.1.0.2-jar-with-dependencies.jar app.jar
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
