@@ -108,7 +108,7 @@ add guide to run software locally
 
 #  Alpha Version
 
-link to be added
+https://github.com/kin-cunico/semGROUP4/tags
 
 
 
