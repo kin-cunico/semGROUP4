@@ -104,7 +104,7 @@ Total population of continent/region/country not living in cities using percenta
 
 # Running The Software Locally
 
-add guide to run software locally
+add guide to run software locally.
 
 #  Alpha Version
 
