@@ -12,18 +12,18 @@ public class App {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
-        int retries = 20;
+        int retries = 50;
 
         for (int i = 0; i < retries; i++) {
             System.out.println("Trying to connect to database...");
 
             try {
-                Thread.sleep(10000);
+                Thread.sleep(30000);
 
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
                 System.out.println("Connected to database!");
 
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             }
             catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + i);

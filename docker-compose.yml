@@ -2,7 +2,7 @@ services:
   # adding the file path to dockerfile
   db:
     build:
-      # context: ./semgroup4-db
+      context: ./semgroup4-db
       dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -23,7 +23,8 @@ services:
   app:
     build: .
     depends_on:
-      - db
+      db:
+        condition: service_started
     networks:
       - semgroup4
     environment:
