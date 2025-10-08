@@ -10,7 +10,6 @@ public class App {
         }
         catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
-            System.out.println(e);
             System.exit(-1);
         }
         int retries = 20;
