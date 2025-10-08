@@ -16,11 +16,5 @@ jobs:
 
       - name: Build with Maven
         run: mvn package
-      - name: Build
-        run: docker build -t semgroup4 .
-      - name: Run image
-        run: docker run --name devopscontainer semgroup4
-      - name: view logs
-        run: docker logs devopscontainer
       - name: Run docker compose
-        run: docker compose up --abort-on-container-exit
+        run: docker compose up --build --abort-on-container-exit
