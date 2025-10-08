@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
+      interval: 30s
       start_period: 25s
       retries: 30
     restart: always
@@ -24,7 +24,7 @@ services:
     build: .
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
     networks:
       - semgroup4
     environment:
