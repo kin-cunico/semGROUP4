@@ -1,0 +1,24 @@
+services:
+  # adding the file path to dockerfile
+  app:
+    build: .
+    depends_on:
+      - db
+    networks:
+      - semgroup4
+
+  db:
+    build: semgroup4-db
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - semgroup4
+    environment:
+      # Set the root password
+      MYSQL_ROOT_PASSWORD: semgroup4
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: world
+networks:
+  semgroup4:
+    driver: bridge

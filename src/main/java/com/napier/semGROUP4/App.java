@@ -1,10 +1,59 @@
 package com.napier.semGROUP4;
-
+import java.sql.*;
 public class App {
-    public static void main(String[] args) {
-        System.out.println("Working on issues");
+    private Connection con = null;
 
-        System.out.println("please pull from development branch and checkout to a new branch" +
-                "before working on this code base");
+
+    public void connectDB() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Could not load SQL driver");
+            System.out.println(e);
+            System.exit(-1);
+        }
+        int retries = 20;
+
+        for (int i = 0; i < retries; i++) {
+            System.out.println("Trying to connect to database...");
+
+            try {
+                Thread.sleep(2000);
+
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
+                System.out.println("Connected to database!");
+
+                Thread.sleep(1000);
+            }
+            catch (SQLException sqle) {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+            }
+            catch (InterruptedException ie) {
+                System.out.println("Interrupted? Check code.");
+            }
+        }
+    }
+
+
+    public void closeDB() {
+        if (con != null) {
+            try {
+                con.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error closing connection " + e);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Initialising app...");
+
+        App a = new App();
+
+        a.connectDB();
+        a.closeDB();
     }
 }

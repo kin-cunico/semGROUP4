@@ -22,3 +22,5 @@ jobs:
         run: docker run --name devopscontainer semgroup4
       - name: view logs
         run: docker logs devopscontainer
+      - name: Run docker compose
+        run: docker compose up --abort-on-container-exit

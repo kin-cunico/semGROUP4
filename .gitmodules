@@ -1,0 +1,3 @@
+[submodule "semgroup4-db"]
+	path = semgroup4-db
+	url = https://github.com/kin-cunico/semgroup4-db
