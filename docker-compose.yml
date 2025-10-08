@@ -1,12 +1,5 @@
 services:
   # adding the file path to dockerfile
-  app:
-    build: .
-    depends_on:
-      - db
-    networks:
-      - semgroup4
-
   db:
     build:
       context: ./semgroup4-db
@@ -21,6 +14,14 @@ services:
       MYSQL_ROOT_PASSWORD: semgroup4
       MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: world
+
+  app:
+    build: .
+    depends_on:
+      - db
+    networks:
+      - semgroup4
+
 networks:
   semgroup4:
     driver: bridge
