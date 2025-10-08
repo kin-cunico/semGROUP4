@@ -4,6 +4,10 @@ services:
     build:
       # context: ./semgroup4-db
       dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
     restart: always
     ports:
       - "3306:3306"
@@ -18,9 +22,16 @@ services:
   app:
     build: .
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - semgroup4
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: semgroup4
+      DB_NAME: world
 
 networks:
   semgroup4:
