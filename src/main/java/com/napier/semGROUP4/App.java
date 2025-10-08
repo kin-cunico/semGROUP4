@@ -26,7 +26,7 @@ public class App {
                 Thread.sleep(1000);
             }
             catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
             }
             catch (InterruptedException ie) {
                 System.out.println("Interrupted? Check code.");

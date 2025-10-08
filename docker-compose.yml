@@ -8,7 +8,9 @@ services:
       - semgroup4
 
   db:
-    build: semgroup4-db
+    build:
+      context: ./semgroup4-db
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "3306:3306"
