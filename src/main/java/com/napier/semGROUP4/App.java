@@ -18,12 +18,12 @@ public class App {
             System.out.println("Trying to connect to database...");
 
             try {
-                Thread.sleep(30000);
+                Thread.sleep(3000);
 
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
                 System.out.println("Connected to database!");
 
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
             catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + i);

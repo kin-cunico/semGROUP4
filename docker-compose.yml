@@ -22,6 +22,12 @@ services:
 
   app:
     build: .
+    healthcheck:
+      test: ['ping']
+      interval: 30s
+      start_period: 30s
+      retries: 10
+    restart: always
     depends_on:
       db:
         condition: service_healthy
