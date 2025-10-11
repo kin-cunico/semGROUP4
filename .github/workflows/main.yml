@@ -25,5 +25,5 @@ jobs:
         run: mvn package
 
       - name: Run docker compose
-        working-directory: ${{ github.workspace }} /semgroup4-db
+        working-directory: ${{ github.workspace }}/semgroup4-db
         run: docker compose up --build --abort-on-container-exit
