@@ -6,9 +6,9 @@ services:
       dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 30s
-      start_period: 25s
-      retries: 30
+      interval: 20s
+      start_period: 5s
+      retries: 20
     restart: always
     ports:
       - "3306:3306"
@@ -23,9 +23,9 @@ services:
   app:
     build: .
     healthcheck:
-      test: NONE
-      interval: 30s
-      start_period: 30s
+      test: ["CMD", "ping", "-h", "localhost"]
+      interval: 50s
+      start_period: 40s
       retries: 10
     restart: always
     depends_on:
