@@ -23,7 +23,7 @@ services:
   app:
     build: .
     healthcheck:
-      test: NONE
+      test: ['ping']
       interval: 30s
       start_period: 30s
       retries: 10
