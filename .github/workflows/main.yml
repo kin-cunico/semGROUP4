@@ -10,14 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check file structure
-        run:
-          pwd
-          ls -R .
-
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
+          fetch-depth: 0
           java-version: '17'
           distribution: 'adopt'
 
@@ -29,4 +25,8 @@ jobs:
 
       - name: Run docker compose
         working-directory: ${{ github.workspace }}
-        run: docker compose up --build --abort-on-container-exit
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "List files: "
+          ls -R .
+          docker compose up --build --abort-on-container-exit
