@@ -1,21 +1,15 @@
-version: '3.8'
-
 services:
-  # MySQL database service
+  # adding the file path to dockerfile
   db:
     build:
-      # Path to the Dockerfile for the database
       context: ./semgroup4-db
       dockerfile: Dockerfile
-    # Healthcheck ensures the database is ready before the app starts
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
       start_period: 25s
       retries: 30
-    # Automatically restart the container if it fails
     restart: always
-    # Expose MySQL port for local testing
     ports:
       - "3306:3306"
     networks:
@@ -23,34 +17,29 @@ services:
     environment:
       # Set the root password
       MYSQL_ROOT_PASSWORD: semgroup4
-      # Allow connections from any host
       MYSQL_ROOT_HOST: "%"
-      # Set initial database name
       MYSQL_DATABASE: world
 
-  # Java application service
   app:
     build: .
-    # Disable healthcheck because the app is not a web service
     healthcheck:
-      test: NONE
-    # Automatically restart the container if it fails
+      test: ['ping']
+      interval: 30s
+      start_period: 30s
+      retries: 10
     restart: always
-    # Ensure app starts only after the database is healthy
     depends_on:
       db:
         condition: service_healthy
     networks:
       - semgroup4
     environment:
-      # Database connection details used by App.java
       DB_HOST: db
       DB_PORT: 3306
       DB_USER: root
       DB_PASSWORD: semgroup4
       DB_NAME: world
 
-# Define a network so app and db can communicate internally
 networks:
   semgroup4:
     driver: bridge
