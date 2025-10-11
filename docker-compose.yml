@@ -2,12 +2,12 @@ services:
   # adding the file path to dockerfile
   db:
     build:
-      #context: ./semgroup4-db
+      context: ./semgroup4-db
       dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 20s
-      start_period: 5s
+      interval: 5s
+      start_period: 10s
       retries: 20
     restart: always
     ports:

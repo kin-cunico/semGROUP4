@@ -10,6 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check file structure
+        run:
+          pwd
+          ls -R .
+
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
@@ -20,5 +25,5 @@ jobs:
         run: mvn package
 
       - name: Run docker compose
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }} /semgroup4-db
         run: docker compose up --build --abort-on-container-exit
