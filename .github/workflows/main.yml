@@ -17,5 +17,5 @@ jobs:
       - name: Build with Maven
         run: mvn package
       - name: Run docker compose
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}/semGROUP4
         run: docker compose up --build --abort-on-container-exit
