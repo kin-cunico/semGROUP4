@@ -1,0 +1,58 @@
+# Main docker-compose file
+# runs the actions for our GitHub workflows
+services:
+  # creating database container
+  db:
+    build:
+      # context to point to correct folder
+      context: ./semgroup4-db
+      dockerfile: Dockerfile
+      # healthcheck before creating app container
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      # every 5s the container should run a healthcheck
+      interval: 5s
+      # the container should start after 10s of being built
+      start_period: 10s
+      # the healthcheck should run 20 times before exiting
+      retries: 20
+    restart: always
+    ports:
+      # fallback port for app and database
+      - "3306:3306"
+    # shared bridge between app and database
+    networks:
+      - semgroup4
+    environment:
+      # Sets the root password, % stands for root user
+      MYSQL_ROOT_PASSWORD: semgroup4
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: world
+
+  # builds app container
+  app:
+    build: .
+    healthcheck:
+      test: ["CMD", "ping", "-h", "localhost"]
+      interval: 50s
+      # added so that the app only starts AFTER the database container is up and running
+      start_period: 40s
+      retries: 10
+    restart: always
+    # app container will only start if database container passes the healthcheck
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - semgroup4
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: semgroup4
+      DB_NAME: world
+
+# creates the shared bridge network for both app and database containers
+networks:
+  semgroup4:
+    driver: bridge

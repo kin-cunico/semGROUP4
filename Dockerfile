@@ -1,4 +1,5 @@
-# setting up provisional dockerfile
+# dockerfile for our main app
+# TODO: for consistency, we should always point to jdk 17
 FROM openjdk:17
 WORKDIR /app
 
