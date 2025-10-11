@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: check submodules
+        run: ls -R semgroup4-db
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
