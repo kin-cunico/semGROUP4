@@ -69,6 +69,9 @@ public class App {
         // logs app initialisation
         System.out.println("Initialising app...");
 
+        // New print statement
+        System.out.println("Test");
+
         // creates an app object to start our methods
         // TODO: since the methods should have their own class, we will need to change the object for that new class
         App a = new App();
