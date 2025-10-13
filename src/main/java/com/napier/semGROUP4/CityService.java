@@ -3,66 +3,57 @@ package com.napier.semGROUP4;
 import java.sql.*;
 
 /**
- * Handles database operations for city information.
- * This class talks to the database and retrieves city data.
+ * This class is responsible for talking to the database
+ * and getting information about cities.
  */
 public class CityService {
-    // The database connection. We need this to send queries and get results.
+    // This stores the connection to the database so we can run queries
     private Connection con;
 
     /**
-     * Constructor for CityService.
-     * Takes a database connection from the main app so we can use it here.
+     * Sets up CityService with an existing database connection.
+     * @param con an active database connection passed from the main app
      */
     public CityService(Connection con) {
         this.con = con;
     }
 
     /**
-     * Finds a city in the database by its name.
+     * Looks up a city in the database using its name.
      *
-     * @param cityName The name of the city to look for
-     * @return A City object with all the information if found, or null if not found
+     * @param cityName the name of the city to search for
+     * @return a City object with details if found, otherwise null
      */
     public City getCity(String cityName) {
         try {
-            // Create a SQL statement object to send commands to the database
+            // Create a statement to send SQL commands to the database
             Statement stmt = con.createStatement();
 
-            // Build the SQL query string.
-            // We are selecting the city name, its country, district, and population.
-            // Joining with the country table so we can get the country name.
-            // Only return rows where the city name matches what the user asked for.
+            // Write the SQL query to find the city, including its country name
             String strSelect = "SELECT city.Name, country.Name AS Country, city.District, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.CountryCode = country.Code " +
                     "WHERE city.Name = '" + cityName + "'";
 
-            // Execute the query and get the results
+            // Run the query and store the results
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check if the query returned any rows
+            // If we find a result, fill a City object with the data
             if (rset.next()) {
-                // If it did, create a new City object to store the data
                 City city = new City();
-                city.name = rset.getString("Name");        // The city’s name
-                city.country = rset.getString("Country");  // The country it belongs to
-                city.district = rset.getString("District");// The district of the city
-                city.population = rset.getInt("Population");// Population count
-
-                // Return the City object to whoever called this method
+                city.name = rset.getString("Name");
+                city.country = rset.getString("Country");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
                 return city;
             } else {
-                // If no city was found, return null
+                // If no city was found with that name, return null
                 return null;
             }
 
         } catch (Exception e) {
-            // If anything goes wrong, print the error so we can debug it
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-
-            // Return null if we couldn’t fetch the city
+            // If something goes wrong, show an error message
+            System.out.println("Error getting city details: " + e.getMessage());
             return null;
         }
     }

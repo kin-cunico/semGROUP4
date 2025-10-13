@@ -63,4 +63,10 @@ public class DatabaseHelper {
             }
         }
     }
+
+    // Allows other parts of the program to call this method and get connection.
+    public Connection getConnection() {
+        return con;
+    }
+
 }
