@@ -5,6 +5,7 @@ public class DatabaseHelper {
 
     // initializing the connection to null
     private Connection con = null;
+    boolean connected = false;
 
 
     public DatabaseHelper() {
@@ -20,13 +21,10 @@ public class DatabaseHelper {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
-        // number of times app should try to connect to database
-        int retries = 30;
 
         // loop for trying to connect to database
-        for (int i = 0; i < retries; i++) {
+        while (!connected) {
             System.out.println("Trying to connect to database...");
-
             try {
 
                 // waits 3 seconds before trying to assign connection
@@ -35,12 +33,13 @@ public class DatabaseHelper {
                 // assigns user and password to connection to connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
                 System.out.println("Connected to database!");
-
+                connected = true;
                 // wait 100ms to exit this trial
                 Thread.sleep(100);
+
             }
             catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println("Failed to connect to database...");
             }
             catch (InterruptedException ie) {
                 System.out.println("Interrupted? Check code.");
@@ -56,6 +55,7 @@ public class DatabaseHelper {
         if (con != null) {
             try {
                 con.close();
+                connected = false;
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ public class DatabaseHelper {
 
     // Allows other parts of the program to call this method and get connection.
     public Connection getConnection() {
-        return con;
+        return this.con;
     }
 
 }

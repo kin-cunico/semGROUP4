@@ -27,11 +27,12 @@ public class App {
             // Check if the city was found in the database
             if (city != null) {
                 // If found, print out all the details of the city
-                System.out.println("\nCity details retrieved successfully:");
-                System.out.println("Name: " + city.name);        // The name of the city
-                System.out.println("Country: " + city.country); // The country the city belongs to
-                System.out.println("District: " + city.district); // The district or state where the city is located
-                System.out.println("Population: " + city.population); // Number of people living in the city
+//                System.out.println("\nCity details retrieved successfully:");
+//                System.out.println("Name: " + city.name);        // The name of the city
+//                System.out.println("Country: " + city.country); // The country the city belongs to
+//                System.out.println("District: " + city.district); // The district or state where the city is located
+//                System.out.println("Population: " + city.population); // Number of people living in the city
+                System.out.println(city.toString());
             } else {
                 // If not found, inform the user
                 System.out.println("City not found in the database.");
