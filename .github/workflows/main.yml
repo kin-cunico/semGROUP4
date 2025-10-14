@@ -19,6 +19,6 @@ jobs:
       - name: Build
         run: docker build -t semGROUP4 .
       - name: Run image
-        run: docker run --name devopscontainer semGROUP4
+        run: docker run --name devopscontainer semgroup4
       - name: view logs
         run: docker logs devopscontainer
