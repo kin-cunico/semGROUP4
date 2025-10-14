@@ -15,7 +15,6 @@ public class App {
 
         db.connectDB();
 
-
 // We are about to test our CityService class to see if it can fetch a city's details from the database
         try {
             // Create a CityService object, giving it the current active database connection
