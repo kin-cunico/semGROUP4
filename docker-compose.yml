@@ -16,7 +16,7 @@ services:
       start_period: 10s
       # the healthcheck should run 20 times before exiting
       retries: 20
-    restart: on-failure
+    restart: always
     ports:
       # fallback port for app and database
       - "3306:3306"
