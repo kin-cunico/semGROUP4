@@ -1,8 +1,5 @@
 name: A workflow for my Hello World App
-on: 
- push:
-    branches:
-      - development-country-class
+on: push
 
 jobs:
   build:
@@ -24,6 +21,8 @@ jobs:
         run: mvn package
 
       - name: Run docker compose
-        run: docker compose -f docker-compose.yml up --abort-on-container-exit --build
+        run: docker compose up --abort-on-container-exit
+
+
        
       
