@@ -1,66 +1,8 @@
 package com.napier.semGROUP4;
-import java.sql.*;
+
+import com.napier.semGROUP4.helper.DatabaseHelper;
+
 public class App {
-
-    // initializing the connection to null
-    private Connection con = null;
-
-    // connect to database method TODO: create a class that handles utilities
-    public void connectDB() {
-
-        // tries to load sql driver for job
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
-            System.exit(-1);
-        }
-        // number of times app should try to connect to database
-        int retries = 30;
-
-        // loop for trying to connect to database
-        // TODO: this method is a copy paste from our lab3, we should plan a method that just keeps the connection open
-        for (int i = 0; i < retries; i++) {
-            System.out.println("Trying to connect to database...");
-
-            try {
-
-                // waits 3 seconds before trying to assign connection
-                Thread.sleep(3000);
-
-                // assigns user and password to connection to connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
-                System.out.println("Connected to database!");
-
-                // wait 100ms to exit this trial
-                Thread.sleep(100);
-            }
-            catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
-            }
-            catch (InterruptedException ie) {
-                System.out.println("Interrupted? Check code.");
-            }
-        }
-    }
-
-
-    // close database connection method
-    // TODO: as with our connection method, we should move this into a class that handle utilities
-    public void closeDB() {
-
-        // if our connection is null we try to close it
-        if (con != null) {
-            try {
-                con.close();
-            }
-            catch (Exception e)
-            {
-                System.out.println("Error closing connection " + e);
-            }
-        }
-    }
 
     public static void main(String[] args) {
 
@@ -69,14 +11,38 @@ public class App {
         // logs app initialisation
         System.out.println("Initialising app...");
 
-        // creates an app object to start our methods
-        // TODO: since the methods should have their own class, we will need to change the object for that new class
-        App a = new App();
+        DatabaseHelper db = new DatabaseHelper();
 
-        // call connectDB method on our app
-        a.connectDB();
+        db.connectDB();
 
-        // call closeDB method on our app
-        a.closeDB();
+
+// We are about to test our CityService class to see if it can fetch a city's details from the database
+        try {
+            // Create a CityService object, giving it the current active database connection
+            CityService cityService = new CityService(db.getConnection());
+
+            // Ask the CityService to find the city named "London"
+            City city = cityService.getCity("London");
+
+            // Check if the city was found in the database
+            if (city != null) {
+                // If found, print out all the details of the city
+//                System.out.println("\nCity details retrieved successfully:");
+//                System.out.println("Name: " + city.name);        // The name of the city
+//                System.out.println("Country: " + city.country); // The country the city belongs to
+//                System.out.println("District: " + city.district); // The district or state where the city is located
+//                System.out.println("Population: " + city.population); // Number of people living in the city
+                System.out.println(city.toString());
+            } else {
+                // If not found, inform the user
+                System.out.println("City not found in the database.");
+            }
+        } catch (Exception e) {
+            // If there is any problem while trying to fetch the city, display a simple error message
+            System.out.println("Error testing CityService: " + e.getMessage());
+        }
+
+// Close the database connection now that we are done with it
+        db.closeDB();
     }
 }

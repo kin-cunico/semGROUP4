@@ -8,7 +8,7 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/kin-cunico/semGROUP4/main.yml)
 
-**Code Authors: Andrew Robson, Kin Cunico, Donell Shamuyarira and Rafael Alvaro**
+**Code Authors: Andrew Robson, Kin Cunico, Donell Shamuyarira, Rafael Alvaro and Jay Parkes**
 
 This piece of software when complete, will read in data from a database and preform functions and generate reports using the information that the database contains.
 
