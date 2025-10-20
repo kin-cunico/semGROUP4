@@ -17,7 +17,6 @@ public class DatabaseHelper {
     }
 
     /** method connectDB()
-     *
      * used to connect to database by creating a sql driver
      * runs within a while loop
      */
