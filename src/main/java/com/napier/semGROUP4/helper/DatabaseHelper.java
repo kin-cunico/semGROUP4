@@ -3,9 +3,6 @@ import java.sql.*;
 
 /** DatabaseHelper class
  * this class is used to create a connection and to stop a connection to a database
- *
- * @method: connectDB()
- * @method: closeDB()
  */
 public class DatabaseHelper {
 
@@ -14,17 +11,15 @@ public class DatabaseHelper {
     boolean connected = false;
 
 
-    /** @constructor: empty
-     *
-     * @return: void
+    /** constructor empty
      */
     public DatabaseHelper() {
     }
 
-    /** @method: connectDB()
+    /** method connectDB()
      *
      * used to connect to database by creating a sql driver
-     * runs whithin a while loop
+     * runs within a while loop
      */
     public void connectDB() {
 
@@ -63,7 +58,7 @@ public class DatabaseHelper {
     }
 
 
-    /** @method: closeDB()
+    /** method closeDB()
      * used to close a database connection
      * checks if connections is not null
      */
@@ -82,7 +77,7 @@ public class DatabaseHelper {
         }
     }
 
-    /** @method: getConnection()
+    /** method getConnection()
      * used to get the connection value of the object calling this
      * @return Connection
      */
