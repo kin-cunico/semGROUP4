@@ -1,6 +1,7 @@
 package com.napier.semGROUP4;
 
 import com.napier.semGROUP4.helper.DatabaseHelper;
+import com.napier.semGROUP4.menu.Menu;
 
 public class App {
 
@@ -15,6 +16,9 @@ public class App {
 
         db.connectDB();
 
+        Menu mn = new Menu();
+        mn.menuStart();
+
 // We are about to test our CityService class to see if it can fetch a city's details from the database
         try {
             // Create a CityService object, giving it the current active database connection
@@ -23,14 +27,10 @@ public class App {
             // Ask the CityService to find the city named "London"
             City city = cityService.getCity("London");
 
+
+
             // Check if the city was found in the database
             if (city != null) {
-                // If found, print out all the details of the city
-//                System.out.println("\nCity details retrieved successfully:");
-//                System.out.println("Name: " + city.name);        // The name of the city
-//                System.out.println("Country: " + city.country); // The country the city belongs to
-//                System.out.println("District: " + city.district); // The district or state where the city is located
-//                System.out.println("Population: " + city.population); // Number of people living in the city
                 System.out.println(city.toString());
             } else {
                 // If not found, inform the user
