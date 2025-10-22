@@ -1,6 +1,9 @@
 package com.napier.semGROUP4.helper;
 import java.sql.*;
 
+/** DatabaseHelper class
+ * this class is used to create a connection and to stop a connection to a database
+ */
 public class DatabaseHelper {
 
     // initializing the connection to null
@@ -8,9 +11,15 @@ public class DatabaseHelper {
     boolean connected = false;
 
 
+    /** constructor empty
+     */
     public DatabaseHelper() {
     }
 
+    /** method connectDB()
+     * used to connect to database by creating a sql driver
+     * runs within a while loop
+     */
     public void connectDB() {
 
         // tries to load sql driver for job
@@ -48,7 +57,10 @@ public class DatabaseHelper {
     }
 
 
-    // close database connection method
+    /** method closeDB()
+     * used to close a database connection
+     * checks if connections is not null
+     */
     public void closeDB() {
 
         // if our connection is null we try to close it
@@ -64,7 +76,10 @@ public class DatabaseHelper {
         }
     }
 
-    // Allows other parts of the program to call this method and get connection.
+    /** method getConnection()
+     * used to get the connection value of the object calling this
+     * @return Connection
+     */
     public Connection getConnection() {
         return this.con;
     }
