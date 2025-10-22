@@ -1,7 +1,5 @@
 package com.napier.semGROUP4.menu;
-
-import java.io.Reader;
-import java.util.Scanner;
+// import java.util.Scanner;
 
 public class Menu {
 
@@ -10,7 +8,7 @@ public class Menu {
 
         while (!exit) {
             System.out.println("Please, choose a option below: ");
-            System.out.printf(
+            System.out.print(
                     """ 
                     1 - Query a city
                     2 - Query a country
@@ -19,7 +17,7 @@ public class Menu {
                     5 - Query a language
                     0 - Exit query menu
                     """);
-            Scanner scanner = new Scanner(System.in);
+            // Scanner scanner = new Scanner(System.in);
 
             int option =  0; // Integer.parseInt(scanner.next());
 
