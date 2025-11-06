@@ -8,7 +8,7 @@
 
 **Goal In Context**
 
-As a company employee, we need to be able to rank cities by population and organise them by country, region, continent, district and world
+As a data analyst, we need to be able to rank cities by population and organise them by country, region, continent, district and world
 
 ---
 

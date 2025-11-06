@@ -8,7 +8,7 @@
 
 **Goal In Context**
 
-As a company employee, we need to be able to organise countries by continent, region, population and/or language
+As a data analyst, we need to be able to organise countries by continent, region, population and/or language
 
 ---
 
