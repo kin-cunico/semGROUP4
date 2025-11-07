@@ -1,6 +1,6 @@
 # dockerfile for our main app
 # for consistency, we should always point to jdk 17
-FROM openjdk:17
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
 # Copy the built JAR into the image
