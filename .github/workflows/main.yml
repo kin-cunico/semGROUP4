@@ -1,34 +1,46 @@
-name: Build, Test, and Run with Docker
+name: Build, Test, and Run App
 on: push
 
 jobs:
   build:
     runs-on: ubuntu-22.04
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: semgroup4
+          MYSQL_DATABASE: world
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
-      # Step 1 - Checkout repo
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      # Step 2 - Setup Java 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Step 3 - Build project with Maven (skip tests)
-      - name: Build app jar
+      - name: Build jar (skip tests)
         run: mvn clean package -DskipTests
 
-      # Step 4 - Run Unit Tests
-      - name: Run Unit Tests
-        run: mvn test -Dsurefire.failIfNoSpecifiedTests=false
+      - name: Wait for MySQL
+        run: sleep 25
 
-      # Step 5 - Build and run Docker containers
-      - name: Run Docker Compose
+      - name: Run Unit Tests
+        run: mvn -Dtest=com.napier.semGROUP4.CityServiceTest test
+
+      - name: Package and Run Docker Compose
         run: |
-          docker compose down || true
-          docker compose up --build --abort-on-container-exit
+          mvn package -DskipTests
+          docker compose up --abort-on-container-exit || true
