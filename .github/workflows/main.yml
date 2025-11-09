@@ -1,10 +1,18 @@
 name: Build, Test (with MySQL), and Package
-on: push
+on:
+  push:
+    branches:
+      - master
+      - development-city-class
+      - main
+      - lab07
 
 jobs:
   test:
+    name: Unit + Integration Tests
     runs-on: ubuntu-22.04
 
+    # 1️⃣ MySQL service (GitHub Actions–compatible)
     services:
       mysql:
         image: mysql:8.0
@@ -20,17 +28,20 @@ jobs:
           --health-retries=15
 
     steps:
+      # 2️⃣ Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 3️⃣ Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # 4️⃣ Wait for MySQL to be ready
       - name: Wait for MySQL to be healthy
         run: |
           for i in {1..40}; do
@@ -42,6 +53,7 @@ jobs:
             sleep 2
           done
 
+      # 5️⃣ Import world.sql dataset
       - name: Import world dataset
         run: |
           sudo apt-get update
@@ -49,31 +61,40 @@ jobs:
           WORLD_PATH=$(find . -name world.sql | head -n 1)
           if [ -f "$WORLD_PATH" ]; then
             echo "Importing world.sql from $WORLD_PATH"
+            mysql -h 127.0.0.1 -uroot -psemgroup4 -e "CREATE DATABASE IF NOT EXISTS world;"
             mysql -h 127.0.0.1 -uroot -psemgroup4 world < "$WORLD_PATH"
+            echo "Database import complete."
+            mysql -h 127.0.0.1 -uroot -psemgroup4 -e "USE world; SHOW TABLES;"
           else
-            echo "world.sql not found. Skipping import."
+            echo "world.sql not found! Check your repo structure."
+            exit 1
           fi
 
-      - name: Run Unit + Integration tests
+      # 6️⃣ Run all tests (unit + integration)
+      - name: Run Unit + Integration Tests
         env:
           DB_HOST: 127.0.0.1
         run: mvn -B clean test
 
+      # 7️⃣ Generate JaCoCo coverage report
       - name: Generate JaCoCo Coverage Report
         run: mvn jacoco:report
 
+      # 8️⃣ Upload coverage artifact
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: target/site/jacoco
 
+      # 9️⃣ Package application JAR
       - name: Package Application
         run: mvn -B -DskipTests package
 
+      # 🔟 Build summary
       - name: Generate CI Summary
         run: |
-          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Build Summary" >> $GITHUB_STEP_SUMMARY
           echo "- Java version: $(java -version 2>&1 | head -n 1)" >> $GITHUB_STEP_SUMMARY
           echo "- Tests passed ✅" >> $GITHUB_STEP_SUMMARY
           echo "- Coverage report generated: target/site/jacoco/index.html" >> $GITHUB_STEP_SUMMARY
