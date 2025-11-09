@@ -40,7 +40,11 @@ public class DatabaseHelper {
                 Thread.sleep(3000);
 
                 // assigns user and password to connection to connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
+                con = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root",
+                        "semgroup4"
+                );
                 System.out.println("Connected to database!");
                 connected = true;
                 // wait 100ms to exit this trial

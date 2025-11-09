@@ -16,7 +16,7 @@ public class App {
 
         db.connectDB();
 
-        Menu mn = new Menu();
+        Menu mn = new Menu(db.getConnection());
         mn.menuStart();
 
 // We are about to test our CityService class to see if it can fetch a city's details from the database
