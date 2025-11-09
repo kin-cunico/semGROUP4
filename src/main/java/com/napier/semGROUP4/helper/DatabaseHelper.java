@@ -1,17 +1,22 @@
 package com.napier.semGROUP4.helper;
+
 import java.sql.*;
 
-/** DatabaseHelper class
- * this class is used to create a connection and to stop a connection to a database
+/**
+ * DatabaseHelper class — creates and closes a connection to the database.
  */
 public class DatabaseHelper {
 
     private Connection con = null;
-    boolean connected = false;
+    private boolean connected = false;
 
     public DatabaseHelper() { }
 
-    public void connectDB() {
+    /**
+     * Connects to a database with configurable location and delay.
+     * Example: connectDB("localhost:3306", 3000)
+     */
+    public void connectDB(String location, int delay) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -19,43 +24,56 @@ public class DatabaseHelper {
             System.exit(-1);
         }
 
-        while (!connected) {
-            System.out.println("Trying to connect to database...");
+        // Default connection details
+        String host = (location == null || location.isEmpty()) ? "localhost:3306" : location;
+        String url = "jdbc:mysql://" + host + "/world?allowPublicKeyRetrieval=true&useSSL=false";
+        String user = "root";
+        String password = "semgroup4";
+
+        int retries = 10;
+        while (!connected && retries > 0) {
+            System.out.println("Attempting to connect to database (" + retries + " retries left)...");
             try {
-                Thread.sleep(1500);
-
-                // read from env, default to localhost (local dev) or "db" (compose)
-                String host = System.getenv("DB_HOST");
-                if (host == null || host.isBlank()) host = "localhost";
-
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://" + host + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root",
-                        "semgroup4"
-                );
-                System.out.println("Connected to database at host: " + host);
+                Thread.sleep(delay);
+                con = DriverManager.getConnection(url, user, password);
                 connected = true;
-                Thread.sleep(100);
-            } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database... " + sqle.getMessage());
+                System.out.println(" Connected to database at " + host);
+            } catch (SQLException e) {
+                System.out.println("Failed to connect to database: " + e.getMessage());
+                retries--;
             } catch (InterruptedException ie) {
-                System.out.println("Interrupted? Check code.");
+                System.out.println("Interrupted while waiting to connect.");
             }
+        }
+
+        if (!connected) {
+            System.out.println(" Could not establish a connection to database after multiple attempts.");
         }
     }
 
+    /** Default connect for local debug (localhost:3306, 3s delay) */
+    public void connectDB() {
+        connectDB("localhost:3306", 3000);
+    }
+
+    /** Closes the database connection. */
     public void closeDB() {
         if (con != null) {
             try {
                 con.close();
                 connected = false;
-            } catch (Exception e) {
-                System.out.println("Error closing connection " + e);
+                System.out.println(" Database connection closed.");
+            } catch (SQLException e) {
+                System.out.println("Error closing database: " + e.getMessage());
             }
         }
     }
 
     public Connection getConnection() {
         return this.con;
+    }
+
+    public boolean isConnected() {
+        return this.connected;
     }
 }

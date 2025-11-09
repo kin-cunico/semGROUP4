@@ -3,45 +3,32 @@ package com.napier.semGROUP4;
 import com.napier.semGROUP4.helper.DatabaseHelper;
 import com.napier.semGROUP4.menu.Menu;
 
+/**
+ * Main application entry point.
+ */
 public class App {
-
     public static void main(String[] args) {
 
-        // TODO: create a menu to pass user inputs to fetch from our database
-
-        // logs app initialisation
         System.out.println("Initialising app...");
-
         DatabaseHelper db = new DatabaseHelper();
 
-        db.connectDB();
-
-        Menu mn = new Menu(db.getConnection());
-        mn.menuStart();
-
-// We are about to test our CityService class to see if it can fetch a city's details from the database
-        try {
-            // Create a CityService object, giving it the current active database connection
-            CityService cityService = new CityService(db.getConnection());
-
-            // Ask the CityService to find the city named "London"
-            City city = cityService.getCity("London");
-
-
-
-            // Check if the city was found in the database
-            if (city != null) {
-                System.out.println(city.toString());
-            } else {
-                // If not found, inform the user
-                System.out.println("City not found in the database.");
-            }
-        } catch (Exception e) {
-            // If there is any problem while trying to fetch the city, display a simple error message
-            System.out.println("Error testing CityService: " + e.getMessage());
+        // If command-line args are supplied, use them; otherwise default to local.
+        if (args.length < 2) {
+            System.out.println("No command-line arguments found. Connecting to localhost for local debugging...");
+            db.connectDB("localhost:3306", 3000);
+        } else {
+            db.connectDB(args[0], Integer.parseInt(args[1]));
         }
 
-// Close the database connection now that we are done with it
+        // Run menu if connected
+        if (db.isConnected()) {
+            Menu menu = new Menu(db.getConnection());
+            menu.menuStart();
+        } else {
+            System.out.println("Database connection failed. Exiting...");
+        }
+
         db.closeDB();
+        System.out.println("Application finished.");
     }
 }
