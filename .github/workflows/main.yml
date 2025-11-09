@@ -58,7 +58,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
-          WORLD_PATH=$(find . -name world.sql | head -n 1)
+          WORLD_PATH="./semgroup4-db/world.sql"
           if [ -f "$WORLD_PATH" ]; then
             echo "Importing world.sql from $WORLD_PATH"
             mysql -h 127.0.0.1 -uroot -psemgroup4 -e "CREATE DATABASE IF NOT EXISTS world;"
