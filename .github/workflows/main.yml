@@ -1,13 +1,26 @@
-name: A workflow for my Hello World App
+name: Build, Test, and Run
 on: push
 
 jobs:
   build:
-    name: Hello world action
     runs-on: ubuntu-22.04
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: semgroup4
+          MYSQL_DATABASE: world
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -psemgroup4"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -18,10 +31,19 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Unit Tests
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL to start..."
+          for i in {1..30}; do
+            nc -z localhost 3306 && echo "MySQL is up!" && break
+            echo "Waiting..."
+            sleep 3
+          done
+
+      - name: Run Unit Tests
         run: mvn test -Dsurefire.failIfNoSpecifiedTests=false
 
-      - name: Package and Run docker compose
+      - name: Package and Run Docker Compose
         run: |
-          mvn package -DskipTests
+          mvn clean package -DskipTests
           docker compose up --abort-on-container-exit
