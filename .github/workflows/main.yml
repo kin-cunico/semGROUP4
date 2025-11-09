@@ -20,34 +20,47 @@ jobs:
           --health-retries=12
 
     steps:
+      # ✅ Ensures all files (including semgroup4-db/world.sql) are checked out
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # ✅ Sets up Java 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
 
+      # ✅ Wait for MySQL to be ready
       - name: Wait for MySQL to be healthy
         run: |
           for i in {1..30}; do
             if mysqladmin ping -h 127.0.0.1 -uroot -psemgroup4 --silent; then
-              echo "MySQL is up"; break
+              echo "✅ MySQL is up and running"
+              break
             fi
-            echo "Waiting for MySQL..."; sleep 2
+            echo "Waiting for MySQL... ($i/30)"
+            sleep 2
           done
 
+      # ✅ Import world.sql file (now with directory check)
       - name: Import world dataset
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
+          echo " Checking for world.sql file..."
+          ls -R
+          echo " Importing world.sql into MySQL..."
           mysql -h 127.0.0.1 -uroot -psemgroup4 world < semgroup4-db/world.sql
 
-      - name: Run Unit + Integration tests (point to CI DB)
+      # ✅ Run tests (unit + integration)
+      - name: Run Unit + Integration tests
         env:
           DB_HOST: 127.0.0.1
         run: mvn -B test -Dsurefire.failIfNoSpecifiedTests=false
 
+      # ✅ Package app
       - name: Package app (skip tests – they already ran)
         run: mvn -B -DskipTests package
