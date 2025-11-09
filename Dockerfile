@@ -1,10 +1,11 @@
-# dockerfile for our main app
-# for consistency, we should always point to jdk 17
-FROM eclipse-temurin:17-jdk-jammy
-WORKDIR /app
+# semgroup4-db/Dockerfile
+FROM mysql:8.0
 
-# Copy the built JAR into the image
-COPY target/semGROUP4-0.1.0.2-jar-with-dependencies.jar app.jar
+# Set up environment variables
+ENV MYSQL_ROOT_PASSWORD=semgroup4
+ENV MYSQL_DATABASE=world
+ENV MYSQL_ROOT_HOST=%
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Copy dataset into MySQL’s initialization folder
+# Any .sql file in this directory runs automatically on container startup
+COPY world.sql /docker-entrypoint-initdb.d/world.sql
