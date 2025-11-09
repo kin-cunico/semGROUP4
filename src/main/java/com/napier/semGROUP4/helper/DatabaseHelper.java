@@ -1,7 +1,9 @@
 package com.napier.semGROUP4.helper;
+
 import java.sql.*;
 
-/** DatabaseHelper class
+/**
+ * DatabaseHelper class
  * this class is used to create a connection and to stop a connection to a database
  */
 public class DatabaseHelper {
@@ -10,13 +12,11 @@ public class DatabaseHelper {
     private Connection con = null;
     boolean connected = false;
 
+    /** empty constructor */
+    public DatabaseHelper() {}
 
-    /** constructor empty
-     */
-    public DatabaseHelper() {
-    }
-
-    /** method connectDB()
+    /**
+     * method connectDB()
      * used to connect to database by creating a sql driver
      * runs within a while loop
      */
@@ -25,8 +25,7 @@ public class DatabaseHelper {
         // tries to load sql driver for job
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
@@ -35,57 +34,47 @@ public class DatabaseHelper {
         while (!connected) {
             System.out.println("Trying to connect to database...");
             try {
-
-                // waits 3 seconds before trying to assign connection
                 Thread.sleep(3000);
 
-                // assigns user and password to connection to connect to database
+                // ✅ get hostname dynamically (for GitHub/Docker/local)
+                String host = System.getenv("DB_HOST");
+                if (host == null || host.isEmpty()) {
+                    host = "db"; // works in Docker Compose
+                }
+
+                // ✅ connect to database
                 con = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "jdbc:mysql://" + host + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
                         "root",
                         "semgroup4"
                 );
-                System.out.println("Connected to database!");
+
+                System.out.println("Connected to database at host: " + host);
                 connected = true;
-                // wait 100ms to exit this trial
                 Thread.sleep(100);
 
-            }
-            catch (SQLException sqle) {
+            } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database...");
-            }
-            catch (InterruptedException ie) {
+            } catch (InterruptedException ie) {
                 System.out.println("Interrupted? Check code.");
             }
         }
     }
 
-
-    /** method closeDB()
-     * used to close a database connection
-     * checks if connections is not null
-     */
+    /** method closeDB() - closes the connection */
     public void closeDB() {
-
-        // if our connection is null we try to close it
         if (con != null) {
             try {
                 con.close();
                 connected = false;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error closing connection " + e);
             }
         }
     }
 
-    /** method getConnection()
-     * used to get the connection value of the object calling this
-     * @return Connection
-     */
+    /** method getConnection() - returns current connection */
     public Connection getConnection() {
         return this.con;
     }
-
 }
