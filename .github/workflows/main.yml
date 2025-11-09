@@ -19,7 +19,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.devops.AppTest test
+        run: mvn test -Dsurefire.failIfNoSpecifiedTests=false
 
       - name: Package and Run docker compose
         run: |
