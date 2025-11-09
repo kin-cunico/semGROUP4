@@ -1,5 +1,4 @@
 name: Build, Test, and Run App
-
 on: push
 
 jobs:
@@ -30,13 +29,21 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      # run JUnit tests connected to the MySQL service
+      # ✅ Load world.sql data into MySQL before running tests
+      - name: Import world dataset
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          sleep 10
+          mysql -h 127.0.0.1 -u root -psemgroup4 world < ./world.sql
+
+      # ✅ Run Unit Tests
       - name: Run Unit Tests
         env:
           DB_HOST: 127.0.0.1
         run: mvn test -Dsurefire.failIfNoSpecifiedTests=false
 
-      # package and run Docker Compose for integration testing
+      # ✅ Build & Run Docker Compose (optional)
       - name: Package and Run Docker Compose
         run: |
           mvn package -DskipTests
