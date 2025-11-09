@@ -1,8 +1,8 @@
-name: Build, Test, and Run App
+name: Build, Test (with MySQL), and Package
 on: push
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-22.04
 
     services:
@@ -14,10 +14,10 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h localhost"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -psemgroup4 || exit 1"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=12
 
     steps:
       - name: Checkout repository
@@ -29,22 +29,25 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      # ✅ Load world.sql data into MySQL before running tests
+      - name: Wait for MySQL to be healthy
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h 127.0.0.1 -uroot -psemgroup4 --silent; then
+              echo "MySQL is up"; break
+            fi
+            echo "Waiting for MySQL..."; sleep 2
+          done
+
       - name: Import world dataset
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
-          sleep 10
-          mysql -h 127.0.0.1 -u root -psemgroup4 world < ./world.sql
+          mysql -h 127.0.0.1 -uroot -psemgroup4 world < semgroup4-db/world.sql
 
-      # ✅ Run Unit Tests
-      - name: Run Unit Tests
+      - name: Run Unit + Integration tests (point to CI DB)
         env:
           DB_HOST: 127.0.0.1
-        run: mvn test -Dsurefire.failIfNoSpecifiedTests=false
+        run: mvn -B test -Dsurefire.failIfNoSpecifiedTests=false
 
-      # ✅ Build & Run Docker Compose (optional)
-      - name: Package and Run Docker Compose
-        run: |
-          mvn package -DskipTests
-          docker compose up --build --abort-on-container-exit
+      - name: Package app (skip tests – they already ran)
+        run: mvn -B -DskipTests package

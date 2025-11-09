@@ -19,25 +19,16 @@ public class CityServiceTest {
     /** used to run the city queries */
     static CityService cityService;
 
-    /**
-     * runs once before all tests
-     * tries to connect to the docker mysql database
-     */
+    // CityServiceTest.java  (only @BeforeAll init() changes)
     @BeforeAll
     static void init() {
         try {
-            /** connecting to mysql database inside docker
-             * if u change the docker setup, this url or password might need updated
-             */
-            con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
-                    "root",
-                    "semgroup4"
-            );
-            /** pass the connection to CityService */
+            String host = System.getenv("DB_HOST");
+            if (host == null || host.isBlank()) host = "localhost";   // local default
+            String url = "jdbc:mysql://" + host + ":3306/world?useSSL=false&allowPublicKeyRetrieval=true";
+            con = DriverManager.getConnection(url, "root", "semgroup4");
             cityService = new CityService(con);
         } catch (SQLException e) {
-            /** if we cant connect, fail the test straight away */
             fail("Database connection failed: " + e.getMessage());
         }
     }
