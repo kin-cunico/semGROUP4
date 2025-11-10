@@ -72,6 +72,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                    <argLine>${jacoco.agent.argLine}</argLine>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
