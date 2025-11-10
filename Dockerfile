@@ -7,4 +7,7 @@ WORKDIR /app
 COPY target/semGROUP4-0.1.0.3-jar-with-dependencies.jar app.jar
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar", "db:3306", "30000"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+#CMD for default ports
+CMD ["db:3306", "30000"]

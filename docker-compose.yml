@@ -40,6 +40,8 @@ services:
       retries: 10
     # We need to note this because this might break our app
     restart: on-failure
+    stdin_open: true
+    tty: true
     # app container will only start if database container passes the healthcheck
     depends_on:
       db:
