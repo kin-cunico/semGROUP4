@@ -19,7 +19,7 @@ services:
     restart: always
     ports:
       # fallback port for app and database
-      - "3306:3306"
+      - "33060:3306"
     # shared bridge between app and database
     networks:
       - semgroup4

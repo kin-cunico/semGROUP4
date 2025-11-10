@@ -26,7 +26,7 @@ public class DatabaseHelper {
 
         // Default connection details
         String host = (location == null || location.isEmpty()) ? "localhost:3306" : location;
-        String url = "jdbc:mysql://localhost:3306/world?allowPublicKeyRetrieval=true&useSSL=false";
+        String url = "jdbc:mysql://" + host + "/world?allowPublicKeyRetrieval=true&useSSL=false";
         String user = "root";
         String password = "semgroup4";
 

@@ -1,14 +1,10 @@
-# semgroup4-db/Dockerfile
-FROM mysql:8.0
+# dockerfile for our main app
+# for consistency, we should always point to jdk 17
+FROM amazoncorretto:17
+WORKDIR /app
 
-# Configure MySQL environment
-ENV MYSQL_ROOT_PASSWORD=semgroup4
-ENV MYSQL_DATABASE=world
-ENV MYSQL_ROOT_HOST=%
+# Copy the built JAR into the image
+COPY target/semGROUP4-0.1.0.3-jar-with-dependencies.jar app.jar
 
-# Copy the world dataset into MySQL's initialization folder
-# Any .sql file here runs automatically on first startup
-COPY world.sql /docker-entrypoint-initdb.d/world.sql
-
-# Default command to start MySQL
-CMD ["mysqld"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar", "db:3306", "30000"]
