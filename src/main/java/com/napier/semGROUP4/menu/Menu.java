@@ -3,7 +3,7 @@ package com.napier.semGROUP4.menu;
 import java.sql.Connection;
 import java.util.Scanner;
 import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.CityService;
+import com.napier.semGROUP4.services.CityService;
 
 /**
  * Console menu for user interaction.
