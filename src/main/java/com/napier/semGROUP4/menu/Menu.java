@@ -10,10 +10,10 @@ import com.napier.semGROUP4.CityService;
  */
 public class Menu {
 
-    private final CityService cityService;
+    private final PopulationService populationService;
 
     public Menu(Connection con) {
-        this.cityService = new CityService(con);
+        this.populationService = new PopulationService(con);
     }
 
     public void menuStart() {
@@ -24,6 +24,7 @@ public class Menu {
             System.out.println("""
                     Please, choose an option below:
                     1 - Query a city
+                    2 - Query population
                     0 - Exit query menu
                     """);
 
@@ -32,6 +33,7 @@ public class Menu {
 
             switch (option) {
                 case 1 -> cityReportMenu(scanner);
+                case 2 -> populationReportMenu(scanner);
                 case 0 -> {
                     exit = true;
                     System.out.println("Exiting query menu...");
