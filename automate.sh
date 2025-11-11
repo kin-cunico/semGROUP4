@@ -33,7 +33,7 @@ docker compose build
 echo "New docker images built."
 
 echo "4. Starting docker containers with interactivity to use terminal: "
-docker compose run -it $PROJECT_NAME
+docker compose up  #$PROJECT_NAME
 
 echo "Deployment complete."
 

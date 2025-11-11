@@ -6,7 +6,6 @@ import java.sql.*;
  * DatabaseHelper class — creates and closes a connection to the database.
  */
 public class DatabaseHelper {
-
     private Connection con = null;
     private boolean connected = false;
 

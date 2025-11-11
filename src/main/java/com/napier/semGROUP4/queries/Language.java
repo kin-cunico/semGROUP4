@@ -4,7 +4,7 @@ public class Language {
 
     private String name;
     private int numOfSpeakers;
-    private float percentageOfSpeakers;
+    private double percentageOfSpeakers;
 
     public String getName() {
         return name;
@@ -22,11 +22,11 @@ public class Language {
         this.numOfSpeakers = numOfSpeakers;
     }
 
-    public float getPercentageOfSpeakers() {
+    public double getPercentageOfSpeakers() {
         return percentageOfSpeakers;
     }
 
-    public void setPercentageOfSpeakers(float percentageOfSpeakers) {
+    public void setPercentageOfSpeakers(double percentageOfSpeakers) {
         this.percentageOfSpeakers = percentageOfSpeakers;
     }
 }
