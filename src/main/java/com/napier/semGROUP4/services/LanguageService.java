@@ -6,6 +6,7 @@ import com.napier.semGROUP4.queries.Language;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class LanguageService {
     private Connection con;
@@ -23,7 +24,7 @@ public class LanguageService {
         try {
             // Write the SQL query to find the language, including its country name
             String strSelect =
-                    "SELECT " +
+                    "SELECT " + "'" + language + "' AS Name, " +
                             "ROUND(SUM(C.Population * (CL.Percentage / 100.0)), 0) AS TotalSpeakers, " +
                             "ROUND((SUM(C.Population * (CL.Percentage / 100.0)) / (SELECT SUM(Population) FROM country)) * 100.0, 2) AS WorldPopPercentage " +
                             "FROM " +
@@ -31,12 +32,10 @@ public class LanguageService {
                             "JOIN " +
                             "country AS C ON CL.CountryCode = C.Code " +
                             "WHERE " +
-                            "CL.Language = ? ";
+                            "CL.Language =  " + "'" + language + "'";
 
             // Create a statement to send SQL commands to the database
-            PreparedStatement stmt = con.prepareStatement(strSelect);
-
-            stmt.setString(1, language);
+            Statement stmt = con.createStatement();
             // Run the query and store the results
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -44,7 +43,7 @@ public class LanguageService {
                 if (rset.next()) {
                     Language language1 = new Language();
                     language1.setName(rset.getString("Name"));
-                    language1.setNumOfSpeakers(rset.getInt("Population"));
+                    language1.setNumOfSpeakers(rset.getInt("TotalSpeakers"));
                     language1.setPercentageOfSpeakers(rset.getDouble("WorldPopPercentage"));
                     return language1;
                 } else {

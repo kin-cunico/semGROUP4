@@ -3,6 +3,7 @@ package com.napier.semGROUP4.menu;
 import java.sql.Connection;
 import java.util.Scanner;
 import com.napier.semGROUP4.City;
+import com.napier.semGROUP4.queries.Language;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
 
@@ -64,7 +65,32 @@ public class Menu {
             int choice = Integer.parseInt(scanner.nextLine());
 
             switch (choice) {
+                case 1 -> {
+                    System.out.println("Type a language: ");
+                    String languageName = scanner.nextLine();
+                    Language language = languageService.getLanguage(languageName);
 
+                    if (language != null) {
+                        System.out.println(language);
+                    }
+                    else {
+                        System.out.println("Language not found.");
+                    }
+
+                }
+                case 2 -> {
+
+                }
+
+                case 3 -> {
+
+                }
+
+                case 0 -> {
+                    languageExit = true;
+                    System.out.println("Exiting Language Reports...");
+                }
+                default -> System.out.println("Invalid option. Try again.");
             }
         }
     }
