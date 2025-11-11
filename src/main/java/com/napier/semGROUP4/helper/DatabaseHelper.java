@@ -1,87 +1,79 @@
 package com.napier.semGROUP4.helper;
+
 import java.sql.*;
 
-/** DatabaseHelper class
- * this class is used to create a connection and to stop a connection to a database
+/**
+ * DatabaseHelper class — creates and closes a connection to the database.
  */
 public class DatabaseHelper {
 
-    // initializing the connection to null
     private Connection con = null;
-    boolean connected = false;
+    private boolean connected = false;
 
+    public DatabaseHelper() { }
 
-    /** constructor empty
+    /**
+     * Connects to a database with configurable location and delay.
+     * Example: connectDB("localhost:3306", 3000)
      */
-    public DatabaseHelper() {
-    }
-
-    /** method connectDB()
-     * used to connect to database by creating a sql driver
-     * runs within a while loop
-     */
-    public void connectDB() {
-
-        // tries to load sql driver for job
+    public void connectDB(String location, int delay) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
-        // loop for trying to connect to database
-        while (!connected) {
-            System.out.println("Trying to connect to database...");
+        // Default connection details
+        String host = (location == null || location.isEmpty()) ? "localhost:3306" : location;
+        String url = "jdbc:mysql://" + host + "/world?allowPublicKeyRetrieval=true&useSSL=false";
+        String user = "root";
+        String password = "semgroup4";
+
+        int retries = 10;
+        while (!connected && retries > 0) {
+            System.out.println("Attempting to connect to database (" + retries + " retries left)...");
             try {
-
-                // waits 3 seconds before trying to assign connection
-                Thread.sleep(3000);
-
-                // assigns user and password to connection to connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
-                System.out.println("Connected to database!");
+                Thread.sleep(delay);
+                con = DriverManager.getConnection(url, user, password);
                 connected = true;
-                // wait 100ms to exit this trial
-                Thread.sleep(100);
+                System.out.println(" Connected to database at " + host);
+            } catch (SQLException e) {
+                System.out.println("Failed to connect to database: " + e.getMessage());
+                retries--;
+            } catch (InterruptedException ie) {
+                System.out.println("Interrupted while waiting to connect.");
+            }
+        }
 
-            }
-            catch (SQLException sqle) {
-                System.out.println("Failed to connect to database...");
-            }
-            catch (InterruptedException ie) {
-                System.out.println("Interrupted? Check code.");
-            }
+        if (!connected) {
+            System.out.println(" Could not establish a connection to database after multiple attempts.");
         }
     }
 
+    /** Default connect for local debug (localhost:3306, 3s delay) */
+    public void connectDB() {
+        connectDB("localhost:3306", 3000);
+    }
 
-    /** method closeDB()
-     * used to close a database connection
-     * checks if connections is not null
-     */
+    /** Closes the database connection. */
     public void closeDB() {
-
-        // if our connection is null we try to close it
         if (con != null) {
             try {
                 con.close();
                 connected = false;
-            }
-            catch (Exception e)
-            {
-                System.out.println("Error closing connection " + e);
+                System.out.println(" Database connection closed.");
+            } catch (SQLException e) {
+                System.out.println("Error closing database: " + e.getMessage());
             }
         }
     }
 
-    /** method getConnection()
-     * used to get the connection value of the object calling this
-     * @return Connection
-     */
     public Connection getConnection() {
         return this.con;
     }
 
+    public boolean isConnected() {
+        return this.connected;
+    }
 }
