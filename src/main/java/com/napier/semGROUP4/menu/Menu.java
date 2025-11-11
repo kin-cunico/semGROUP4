@@ -56,8 +56,7 @@ public class Menu {
             System.out.println("""
                     --- Language Reports ---
                     1 - Get a language report
-                    2 - Show top 5 languages in the world
-                    3 - Show Organisation Languages
+                    2 - Show Organisation Languages Report
                     
                     0 - Exit Language Reports
                     """);
@@ -79,11 +78,8 @@ public class Menu {
 
                 }
                 case 2 -> {
-
-                }
-
-                case 3 -> {
-
+                        System.out.println("--- Organisation languages: ");
+                        languageService.getOrgLanguages();
                 }
 
                 case 0 -> {

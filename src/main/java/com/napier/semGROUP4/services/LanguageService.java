@@ -3,13 +3,15 @@ package com.napier.semGROUP4.services;
 import com.napier.semGROUP4.City;
 import com.napier.semGROUP4.queries.Language;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class LanguageService {
     private Connection con;
+    private ArrayList<String> OrganisationLanguages;
+    private ArrayList<Language> OrgsLangs;
 
     /**
      * Sets up LanguageService with an existing database connection.
@@ -60,5 +62,29 @@ public class LanguageService {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public int getOrgLanguages() {
+        ArrayList<String> OrganisationLanguages = new ArrayList<String>(Arrays.asList(
+                "Chinese",
+                "English",
+                "Hindi",
+                "Arabic",
+                "Spanish"
+        ));
+
+        ArrayList<Language> OrgsLangs = new ArrayList<>();
+        for (int i = 0; i < OrganisationLanguages.size(); i++) {
+            OrgsLangs.add(getLanguage(OrganisationLanguages.get(i)));
+        }
+
+        // sorting from greatest to lowest
+        OrgsLangs.sort(Comparator.comparing(Language::getNumOfSpeakers).reversed());
+
+        for (Language l : OrgsLangs) {
+            System.out.println(l);
+        }
+        return OrgsLangs.size();
     }
 }
