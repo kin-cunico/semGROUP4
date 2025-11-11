@@ -2,7 +2,10 @@ package com.napier.semGROUP4.menu;
 
 import java.sql.Connection;
 import java.util.Scanner;
+
+import com.napier.semGROUP4.CapitalCity;
 import com.napier.semGROUP4.City;
+import com.napier.semGROUP4.services.CapitalCityService;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
 
@@ -12,11 +15,13 @@ import com.napier.semGROUP4.services.LanguageService;
 public class Menu {
 
     private final CityService cityService;
+    private final CapitalCityService capitalCityService;
     private final LanguageService languageService;
 
     public Menu(Connection con) {
         this.cityService = new CityService(con);
         this.languageService = new LanguageService(con);
+        this.capitalCityService = new CapitalCityService(con);
     }
 
     public void menuStart() {
@@ -28,6 +33,7 @@ public class Menu {
                     Please, choose an option below:
                     1 - Query a city
                     2 - Query a language
+                    3 - Query a Capital city
                     0 - Exit query menu
                     """);
 
@@ -37,6 +43,7 @@ public class Menu {
             switch (option) {
                 case 1 -> cityReportMenu(scanner);
                 case 2 -> languageReportMenu(scanner);
+                case 3 -> capitalCityReportMenu(scanner);
                 case 0 -> {
                     exit = true;
                     System.out.println("Exiting query menu...");
@@ -45,6 +52,36 @@ public class Menu {
             }
         }
         scanner.close();
+    }
+
+    private void capitalCityReportMenu(Scanner scanner) {
+        boolean capitalExit = false;
+
+        while (!capitalExit) {
+            System.out.println("""
+                    --- Capital City Reports ---
+                    1 - List all the capital cities in the world organised from largest to smallest.
+                    2 - List all the capital cities in a continent organised from largest to smallest.
+                    3 - List all the capital cities in a region organised from largest to smallest.
+                    4 - Get the top populated capital cities in the world which the list size is chosen by the user.
+                    5 - Get the top populated capital cities in a continent which the list size is chosen by the user.
+                    6 - Get the top populated capital cities in a region which the list size is organised by the user.
+                    0 - Exit CapitalCity Reports
+                    """);
+
+            System.out.print("Enter choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+                case 1 -> {
+
+                }
+
+                case 2 -> cityService.displayCities(cityService.getAllCitiesInWorld());
+
+                default -> System.out.println("Invalid option. Try again.");
+            }
+        }
     }
 
     private void languageReportMenu(Scanner scanner) {
