@@ -12,8 +12,6 @@
 
 This piece of software when complete, will read in data from a database and preform functions and generate reports using the information that the database contains.
 
-
-
 **Group 4 Code of Conduct**
 
 https://github.com/kin-cunico/semGROUP4/blob/main/CODE_OF_CONDUCT.md
