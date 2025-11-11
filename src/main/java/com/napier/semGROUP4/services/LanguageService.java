@@ -38,19 +38,29 @@ public class LanguageService {
 
             stmt.setString(1, language);
             // Run the query and store the results
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = stmt.executeQuery();
 
-                // If we find a result, fill a language object with the data
-                if (rset.next()) {
-                    Language language1 = new Language();
-                    language1.setName(rset.getString("Name"));
-                    language1.setNumOfSpeakers(rset.getInt("Population"));
-                    language1.setPercentageOfSpeakers(rset.getDouble("WorldPopPercentage"));
-                    return language1;
-                } else {
-                    // If no language was found with that name, return null
+// Check if any result exists
+            if (rset.next()) {
+                // Get the numbers from the result
+                int totalSpeakers = rset.getInt("TotalSpeakers");
+                double worldPop = rset.getDouble("WorldPopPercentage");
+
+                //  If the result is empty or zero, treat it as no data found
+                if (rset.wasNull() || totalSpeakers == 0) {
                     return null;
                 }
+
+                // Otherwise build the Language object normally
+                Language language1 = new Language();
+                language1.setName(language);
+                language1.setNumOfSpeakers(totalSpeakers);
+                language1.setPercentageOfSpeakers(worldPop);
+                return language1;
+            } else {
+                // No rows at all, also return null
+                return null;
+            }
         } catch (Exception e) {
             // If something goes wrong, show an error message
             System.out.println("Error getting language details: " + e.getMessage());
