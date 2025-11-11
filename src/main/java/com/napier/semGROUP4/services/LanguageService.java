@@ -45,6 +45,10 @@ public class LanguageService {
                     language1.setName(rset.getString("Name"));
                     language1.setNumOfSpeakers(rset.getInt("TotalSpeakers"));
                     language1.setPercentageOfSpeakers(rset.getDouble("WorldPopPercentage"));
+
+                    if (language1.getNumOfSpeakers() <= 0) {
+                        return null;
+                    }
                     return language1;
                 } else {
                     // If no language was found with that name, return null
