@@ -3,7 +3,8 @@ package com.napier.semGROUP4.menu;
 import java.sql.Connection;
 import java.util.Scanner;
 import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.CityService;
+import com.napier.semGROUP4.services.CityService;
+import com.napier.semGROUP4.services.LanguageService;
 
 /**
  * Console menu for user interaction.
@@ -11,9 +12,11 @@ import com.napier.semGROUP4.CityService;
 public class Menu {
 
     private final CityService cityService;
+    private final LanguageService languageService;
 
     public Menu(Connection con) {
         this.cityService = new CityService(con);
+        this.languageService = new LanguageService(con);
     }
 
     public void menuStart() {
@@ -24,6 +27,7 @@ public class Menu {
             System.out.println("""
                     Please, choose an option below:
                     1 - Query a city
+                    2 - Query a language
                     0 - Exit query menu
                     """);
 
@@ -32,6 +36,7 @@ public class Menu {
 
             switch (option) {
                 case 1 -> cityReportMenu(scanner);
+                case 2 -> languageReportMenu(scanner);
                 case 0 -> {
                     exit = true;
                     System.out.println("Exiting query menu...");
@@ -40,6 +45,28 @@ public class Menu {
             }
         }
         scanner.close();
+    }
+
+    private void languageReportMenu(Scanner scanner) {
+
+        boolean languageExit = false;
+
+        while (!languageExit) {
+            System.out.println("""
+                    --- Language Reports ---
+                    1 - Get a language report
+                    2 - Show top 5 languages in the world
+                    3 - Show Organisation Languages
+                    
+                    0 - Exit Language Reports
+                    """);
+            System.out.println("Enter choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+
+            }
+        }
     }
 
     private void cityReportMenu(Scanner scanner) {
