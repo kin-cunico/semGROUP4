@@ -18,12 +18,21 @@ public class Menu {
     private final CapitalCityService capitalCityService;
     private final LanguageService languageService;
 
+    /**
+     * Initializes the menu with city, language, and capital city services.
+     *
+     * @param con active database connection used by services
+     */
     public Menu(Connection con) {
         this.cityService = new CityService(con);
         this.languageService = new LanguageService(con);
         this.capitalCityService = new CapitalCityService(con);
     }
 
+    /**
+     * Starts the main menu loop, routing to city, language,
+     * or capital city report submenus until the user exits.
+     */
     public void menuStart() {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
@@ -54,6 +63,11 @@ public class Menu {
         scanner.close();
     }
 
+    /**
+     * Displays and handles the Capital City Reports submenu.
+     *
+     * @param scanner scanner used for user input
+     */
     private void capitalCityReportMenu(Scanner scanner) {
 
         boolean capitalExit = false;
@@ -118,6 +132,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Displays and handles the Language Reports submenu.
+     *
+     * @param scanner scanner used for user input
+     */
     private void languageReportMenu(Scanner scanner) {
 
         boolean languageExit = false;
@@ -141,6 +160,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Displays and handles the City Reports submenu,
+     * including queries by name, location filters, and top-N lists.
+     *
+     * @param scanner scanner used for user input
+     */
     private void cityReportMenu(Scanner scanner) {
         boolean cityExit = false;
 
