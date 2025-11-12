@@ -33,7 +33,7 @@ public class Menu {
                     Please, choose an option below:
                     1 - Query a city
                     2 - Query a language
-                    3 - Query a Capital city
+                    3 - Query a Capital city :DDDDDD
                     0 - Exit query menu
                     """);
 
@@ -55,17 +55,19 @@ public class Menu {
     }
 
     private void capitalCityReportMenu(Scanner scanner) {
+
         boolean capitalExit = false;
 
         while (!capitalExit) {
             System.out.println("""
                     --- Capital City Reports ---
-                    1 - List all the capital cities in the world organised from largest to smallest.
-                    2 - List all the capital cities in a continent organised from largest to smallest.
-                    3 - List all the capital cities in a region organised from largest to smallest.
-                    4 - Get the top populated capital cities in the world which the list size is chosen by the user.
-                    5 - Get the top populated capital cities in a continent which the list size is chosen by the user.
+                    1 - All the capital cities in the world organised from largest to smallest.
+                    2 - All the capital cities in a continent
+                    3 - All the capital cities in a region
+                    4 - Top populated capital cities in the world which the list size is chosen by the user.
+                    5 - Top populated capital cities in a continent which the list size is chosen by the user.
                     6 - Get the top populated capital cities in a region which the list size is organised by the user.
+                    
                     0 - Exit CapitalCity Reports
                     """);
 
@@ -73,11 +75,43 @@ public class Menu {
             int choice = Integer.parseInt(scanner.nextLine());
 
             switch (choice) {
-                case 1 -> {
+                case 1 -> {capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInWorld());}
 
+                case 2 -> {
+                    System.out.print("Enter continent name: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInContinent(scanner.nextLine()));
                 }
 
-                case 2 -> cityService.displayCities(cityService.getAllCitiesInWorld());
+                case 3 -> {
+                    System.out.print("Enter region name: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInRegion(scanner.nextLine()));
+                }
+
+                case 4 -> {
+                    System.out.print("Enter how many top city capitals to show: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.worldTopPopulatedCapitals(Integer.parseInt(scanner.nextLine())));
+                }
+
+                case 5 -> {
+                    System.out.print("Enter continent name: ");
+                    String continent = scanner.nextLine();
+                    System.out.print("Enter number of continents to show: ");
+                    Integer listSize = Integer.parseInt(scanner.nextLine());
+                    capitalCityService.displayCapitalCities(capitalCityService.continentTopPopulatedCapitals(continent, listSize));
+                }
+
+                case 6 -> {
+                    System.out.print("Enter region name: ");
+                    String region = scanner.nextLine();
+                    System.out.print("Enter number of regions to show: ");
+                    Integer listSize = Integer.parseInt(scanner.nextLine());
+                    capitalCityService.displayCapitalCities(capitalCityService.regionTopPopulatedCapitals(region, listSize));
+                }
+
+                case 0 -> {
+                    capitalExit = true;
+                    System.out.println("Exiting Capital City Reports...");
+                }
 
                 default -> System.out.println("Invalid option. Try again.");
             }
@@ -99,6 +133,7 @@ public class Menu {
                     """);
             System.out.println("Enter choice: ");
             int choice = Integer.parseInt(scanner.nextLine());
+
 
             switch (choice) {
 
