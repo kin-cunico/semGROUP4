@@ -10,11 +10,19 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Integration tests for the LanguageService class.
+ * Ensures language data is correctly retrieved from the database.
+ */
 public class LanguageServiceTest {
     private static Connection con;
     private static LanguageService languageService;
     private static boolean dbAvailable = false;
 
+    /**
+     * Sets up a database connection before running all tests.
+     * Uses environment variables for host and port if available.
+     */
     @BeforeAll
     static void init() {
         try {
@@ -40,6 +48,9 @@ public class LanguageServiceTest {
         }
     }
 
+    /**
+     * Closes the database connection after all tests have completed.
+     */
     @AfterAll
     static void tearDown() {
         try {
@@ -52,6 +63,10 @@ public class LanguageServiceTest {
         }
     }
 
+    /**
+     * Tests that a valid language query returns correct data.
+     * Verifies that a known language like "Chinese" exists and has a positive speaker count.
+     */
     @Test
     @Order(1)
     @DisplayName("Get existing language returns valid data")
@@ -63,6 +78,10 @@ public class LanguageServiceTest {
         assertTrue(language.getNumOfSpeakers() > 0, "Population should be positive");
     }
 
+    /**
+     * Tests that an invalid language query returns null.
+     * Verifies that a non-existent language produces no data.
+     */
     @Test
     @Order(2)
     @DisplayName("Get invalid language returns null")

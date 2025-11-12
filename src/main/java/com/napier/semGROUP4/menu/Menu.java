@@ -14,11 +14,20 @@ public class Menu {
     private final CityService cityService;
     private final LanguageService languageService;
 
+    /**
+     * Initializes the menu with CityService and LanguageService using the given connection.
+     *
+     * @param con the active database connection
+     */
     public Menu(Connection con) {
         this.cityService = new CityService(con);
         this.languageService = new LanguageService(con);
     }
 
+    /**
+     * Starts the main interactive loop for the application menu.
+     * Users can choose city reports, language reports, or exit.
+     */
     public void menuStart() {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +56,11 @@ public class Menu {
         scanner.close();
     }
 
+    /**
+     * Displays and handles the Language Reports submenu.
+     *
+     * @param scanner the input scanner used to read user choices
+     */
     private void languageReportMenu(Scanner scanner) {
 
         boolean languageExit = false;
@@ -69,6 +83,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Displays and handles the City Reports submenu, including queries
+     * by name, continent, region, country, district, and top-N listings.
+     *
+     * @param scanner the input scanner used to read user choices
+     */
     private void cityReportMenu(Scanner scanner) {
         boolean cityExit = false;
 

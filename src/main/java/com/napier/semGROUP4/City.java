@@ -1,51 +1,77 @@
 package com.napier.semGROUP4;
 
 /**
- * Represents a city
+ * Represents a city with its name, country, district, and population.
  */
 public class City
 {
     /**
-     * City name
+     * City name.
      */
     public String name;
 
     /**
-     * Country the city belongs to
+     * Country the city belongs to.
      */
     public String country;
 
     /**
-     * District of the city
+     * District of the city.
      */
     public String district;
 
     /**
-     * Population of the city
+     * Population of the city.
      */
     public int population;
 
-
+    /**
+     * Default constructor for City.
+     */
     public City () {
     }
 
+    /**
+     * Gets the city's name.
+     *
+     * @return the name of the city
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Gets the country the city belongs to.
+     *
+     * @return the country name
+     */
     public String getCountry() {
         return this.country;
     }
 
+    /**
+     * Gets the city's district.
+     *
+     * @return the district name
+     */
     public String getDistrict() {
         return this.district;
     }
 
+    /**
+     * Gets the city's population.
+     *
+     * @return the population count
+     */
     public int getPopulation() {
         return this.population;
     }
 
-
+    /**
+     * Returns a formatted string showing the city's details.
+     *
+     * @return formatted string with name, country, district, and population
+     */
     @Override
     public String toString() {
         return """

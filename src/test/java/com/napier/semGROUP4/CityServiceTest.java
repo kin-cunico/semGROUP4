@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Integration tests for CityService using the real MySQL world database.
- * Works both locally and in CI (GitHub Actions).
+ * Validates that queries return correct city data across different filters.
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CityServiceTest {
@@ -17,6 +17,10 @@ public class CityServiceTest {
     private static CityService cityService;
     private static boolean dbAvailable = false;
 
+    /**
+     * Sets up the database connection before running tests.
+     * Uses environment variables for host and port if available.
+     */
     @BeforeAll
     static void init() {
         try {
@@ -42,6 +46,9 @@ public class CityServiceTest {
         }
     }
 
+    /**
+     * Closes the database connection after all tests are completed.
+     */
     @AfterAll
     static void tearDown() {
         try {
@@ -56,6 +63,10 @@ public class CityServiceTest {
 
     // ----------------- INDIVIDUAL TESTS -----------------
 
+    /**
+     * Tests that querying an existing city returns valid data.
+     * Example: "Kabul" should return a non-null city with a positive population.
+     */
     @Test
     @Order(1)
     @DisplayName("Get existing city returns valid data")
@@ -67,6 +78,9 @@ public class CityServiceTest {
         assertTrue(city.population > 0, "Population should be positive");
     }
 
+    /**
+     * Tests that querying a non-existent city returns null.
+     */
     @Test
     @Order(2)
     @DisplayName("Get invalid city returns null")
@@ -76,6 +90,9 @@ public class CityServiceTest {
         assertNull(city, "Invalid city should return null");
     }
 
+    /**
+     * Tests that retrieving all cities in the world returns a non-empty list.
+     */
     @Test
     @Order(3)
     @DisplayName("Get all cities in world returns many results")
@@ -86,6 +103,9 @@ public class CityServiceTest {
         assertTrue(cities.size() > 0, "Should return at least one city");
     }
 
+    /**
+     * Tests that retrieving cities by continent ("Asia") returns results.
+     */
     @Test
     @Order(4)
     @DisplayName("Get cities in Asia returns valid list")
@@ -96,6 +116,9 @@ public class CityServiceTest {
         assertTrue(cities.size() > 0, "Asia should have cities");
     }
 
+    /**
+     * Tests that retrieving cities from an invalid region returns an empty list.
+     */
     @Test
     @Order(5)
     @DisplayName("Get cities in invalid region returns empty list")
@@ -106,6 +129,9 @@ public class CityServiceTest {
         assertEquals(0, cities.size(), "Invalid region should have 0 results");
     }
 
+    /**
+     * Tests that retrieving cities by country ("Japan") returns results.
+     */
     @Test
     @Order(6)
     @DisplayName("Get cities in Japan returns results")
@@ -116,6 +142,9 @@ public class CityServiceTest {
         assertTrue(cities.size() > 0, "Japan should have cities");
     }
 
+    /**
+     * Tests that retrieving cities by district ("California") returns results.
+     */
     @Test
     @Order(7)
     @DisplayName("Get cities in California district returns results")
@@ -126,6 +155,9 @@ public class CityServiceTest {
         assertTrue(cities.size() > 0, "California should have cities");
     }
 
+    /**
+     * Tests that retrieving the top 10 cities in the world returns up to 10 results.
+     */
     @Test
     @Order(8)
     @DisplayName("Top 10 cities in the world returns up to 10 results")
@@ -136,6 +168,9 @@ public class CityServiceTest {
         assertTrue(cities.size() <= 10, "Should return 10 or fewer cities");
     }
 
+    /**
+     * Tests that retrieving the top 5 cities in Asia returns up to 5 results.
+     */
     @Test
     @Order(9)
     @DisplayName("Top 5 cities in Asia returns up to 5 results")
@@ -146,6 +181,9 @@ public class CityServiceTest {
         assertTrue(cities.size() <= 5);
     }
 
+    /**
+     * Tests that retrieving the top 3 cities in China returns up to 3 results.
+     */
     @Test
     @Order(10)
     @DisplayName("Top 3 cities in China returns up to 3 results")
@@ -156,6 +194,9 @@ public class CityServiceTest {
         assertTrue(cities.size() <= 3);
     }
 
+    /**
+     * Tests that retrieving the top 2 cities in the district "California" returns up to 2 results.
+     */
     @Test
     @Order(11)
     @DisplayName("Top 2 cities in California returns up to 2 results")
