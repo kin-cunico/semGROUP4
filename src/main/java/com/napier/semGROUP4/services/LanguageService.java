@@ -44,7 +44,7 @@ public class LanguageService {
             // Create a statement to send SQL commands to the database
             Statement stmt = con.createStatement();
             // Run the query and store the results
-            ResultSet rset = stmt.executeQuery();
+            ResultSet rset = stmt.executeQuery(strSelect);
 
 // Check if any result exists
             if (rset.next()) {
