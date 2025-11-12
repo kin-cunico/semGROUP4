@@ -44,7 +44,7 @@ public class LanguageService {
             // Create a statement to send SQL commands to the database
             Statement stmt = con.createStatement();
             // Run the query and store the results
-            ResultSet rset = stmt.executeQuery();
+            ResultSet rset = stmt.executeQuery(strSelect);
 
 // Check if any result exists
             if (rset.next()) {
@@ -76,6 +76,11 @@ public class LanguageService {
     }
 
 
+    /**
+     * Retrieves information about the
+     * organisation languages and ranks them by number of speakers
+     * @return int referring to the number of objects created
+     */
     public int getOrgLanguages() {
         ArrayList<String> OrganisationLanguages = new ArrayList<String>(Arrays.asList(
                 "Chinese",
