@@ -1,8 +1,8 @@
 package com.napier.semGROUP4.queries;
 
 /**
- * Represents a language and its related statistics,
- * including total speakers and percentage of the world population.
+ * Represents a language with its name, number of speakers,
+ * and percentage of the world population.
  */
 public class Language {
 
@@ -11,7 +11,7 @@ public class Language {
     private double percentageOfSpeakers;
 
     /**
-     * Retrieves the language name.
+     * Gets the language name.
      *
      * @return the name of the language
      */
@@ -29,7 +29,7 @@ public class Language {
     }
 
     /**
-     * Retrieves the total number of people who speak this language.
+     * Gets the total number of people who speak this language.
      *
      * @return the number of speakers
      */
@@ -47,7 +47,7 @@ public class Language {
     }
 
     /**
-     * Retrieves the percentage of the world population
+     * Gets the percentage of the world population
      * that speaks this language.
      *
      * @return the percentage of speakers globally

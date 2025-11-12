@@ -2,8 +2,10 @@ package com.napier.semGROUP4.menu;
 
 import java.sql.Connection;
 import java.util.Scanner;
+
+import com.napier.semGROUP4.CapitalCity;
 import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.queries.Language;
+import com.napier.semGROUP4.services.CapitalCityService;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
 
@@ -13,22 +15,23 @@ import com.napier.semGROUP4.services.LanguageService;
 public class Menu {
 
     private final CityService cityService;
+    private final CapitalCityService capitalCityService;
     private final LanguageService languageService;
 
     /**
-     * Initializes the Menu with CityService and LanguageService
-     * using the provided database connection.
+     * Initializes the menu with city, language, and capital city services.
      *
-     * @param con the active database connection used by the services
+     * @param con active database connection used by services
      */
     public Menu(Connection con) {
         this.cityService = new CityService(con);
         this.languageService = new LanguageService(con);
+        this.capitalCityService = new CapitalCityService(con);
     }
 
     /**
-     * Starts the main interactive console menu loop.
-     * Allows users to query cities, query languages, or exit the application.
+     * Starts the main menu loop, routing to city, language,
+     * or capital city report submenus until the user exits.
      */
     public void menuStart() {
         boolean exit = false;
@@ -39,6 +42,7 @@ public class Menu {
                     Please, choose an option below:
                     1 - Query a city
                     2 - Query a language
+                    3 - Query a Capital city :DDDDDD
                     0 - Exit query menu
                     """);
 
@@ -48,6 +52,7 @@ public class Menu {
             switch (option) {
                 case 1 -> cityReportMenu(scanner);
                 case 2 -> languageReportMenu(scanner);
+                case 3 -> capitalCityReportMenu(scanner);
                 case 0 -> {
                     exit = true;
                     System.out.println("Exiting query menu...");
@@ -59,10 +64,78 @@ public class Menu {
     }
 
     /**
-     * Displays and manages the language report submenu.
-     * Allows the user to query a specific language or view predefined language reports.
+     * Displays and handles the Capital City Reports submenu.
      *
-     * @param scanner the Scanner instance used for reading user input
+     * @param scanner scanner used for user input
+     */
+    private void capitalCityReportMenu(Scanner scanner) {
+
+        boolean capitalExit = false;
+
+        while (!capitalExit) {
+            System.out.println("""
+                    --- Capital City Reports ---
+                    1 - All the capital cities in the world organised from largest to smallest.
+                    2 - All the capital cities in a continent
+                    3 - All the capital cities in a region
+                    4 - Top populated capital cities in the world which the list size is chosen by the user.
+                    5 - Top populated capital cities in a continent which the list size is chosen by the user.
+                    6 - Get the top populated capital cities in a region which the list size is organised by the user.
+                    
+                    0 - Exit CapitalCity Reports
+                    """);
+
+            System.out.print("Enter choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+                case 1 -> {capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInWorld());}
+
+                case 2 -> {
+                    System.out.print("Enter continent name: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInContinent(scanner.nextLine()));
+                }
+
+                case 3 -> {
+                    System.out.print("Enter region name: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.getAllCapitalsInRegion(scanner.nextLine()));
+                }
+
+                case 4 -> {
+                    System.out.print("Enter how many top city capitals to show: ");
+                    capitalCityService.displayCapitalCities(capitalCityService.worldTopPopulatedCapitals(Integer.parseInt(scanner.nextLine())));
+                }
+
+                case 5 -> {
+                    System.out.print("Enter continent name: ");
+                    String continent = scanner.nextLine();
+                    System.out.print("Enter number of continents to show: ");
+                    int listSize = Integer.parseInt(scanner.nextLine());
+                    capitalCityService.displayCapitalCities(capitalCityService.continentTopPopulatedCapitals(continent, listSize));
+                }
+
+                case 6 -> {
+                    System.out.print("Enter region name: ");
+                    String region = scanner.nextLine();
+                    System.out.print("Enter number of regions to show: ");
+                    int listSize = Integer.parseInt(scanner.nextLine());
+                    capitalCityService.displayCapitalCities(capitalCityService.regionTopPopulatedCapitals(region, listSize));
+                }
+
+                case 0 -> {
+                    capitalExit = true;
+                    System.out.println("Exiting Capital City Reports...");
+                }
+
+                default -> System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+
+    /**
+     * Displays and handles the Language Reports submenu.
+     *
+     * @param scanner scanner used for user input
      */
     private void languageReportMenu(Scanner scanner) {
 
@@ -78,6 +151,7 @@ public class Menu {
                     """);
             System.out.println("Enter choice: ");
             int choice = Integer.parseInt(scanner.nextLine());
+
 
             switch (choice) {
                 case 1 -> {

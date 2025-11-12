@@ -1,30 +1,29 @@
 package com.napier.semGROUP4;
 
 /**
- * Represents a city
+ * Represents a city with its name, country, district, and population.
  */
 public class City
 {
     /**
-     * City name
+     * City name.
      */
     public String name;
 
     /**
-     * Country the city belongs to
+     * Country the city belongs to.
      */
     public String country;
 
     /**
-     * District of the city
+     * District of the city.
      */
     public String district;
 
     /**
-     * Population of the city
+     * Population of the city.
      */
     public int population;
-
 
     /**
      * Default constructor for creating an empty City object.
@@ -33,7 +32,7 @@ public class City
     }
 
     /**
-     * Retrieves the city's name.
+     * Gets the city's name.
      *
      * @return the name of the city
      */
@@ -42,7 +41,7 @@ public class City
     }
 
     /**
-     * Retrieves the country the city belongs to.
+     * Gets the country the city belongs to.
      *
      * @return the name of the country
      */
@@ -51,7 +50,7 @@ public class City
     }
 
     /**
-     * Retrieves the district of the city.
+     * Gets the city's district.
      *
      * @return the name of the district
      */
@@ -60,20 +59,19 @@ public class City
     }
 
     /**
-     * Retrieves the city's population.
+     * Gets the city's population.
      *
-     * @return the population number
+     * @return the population count
      */
     public int getPopulation() {
         return this.population;
     }
 
     /**
-     * Returns a formatted string representation of the city object.
+     * Returns a formatted string with the city's details.
      *
-     * @return a string containing the city's name, country, district, and population
+     * @return a formatted string containing name, country, district, and population
      */
-
     @Override
     public String toString() {
         return """
