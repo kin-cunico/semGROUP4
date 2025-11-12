@@ -24,8 +24,7 @@ public class Menu {
         while (!exit) {
             System.out.println("""
                     Please, choose an option below:
-                    1 - Query a city
-                    2 - Query population
+                    1 - Query Population
                     0 - Exit query menu
                     """);
 
@@ -50,18 +49,16 @@ public class Menu {
         while (!populationExit) {
             System.out.println("""
                     --- population Reports ---
-                    1 - Get a single city by name
-                    2 - List all cities in the world
-                    3 - List cities in a continent
-                    4 - List cities in a region
-                    5 - List cities in a country
-                    6 - List cities in a district
-                    7 - Show top N cities in the world
-                    8 - Show top N cities in a continent
-                    9 - Show top N cities in a region
-                    10 - Show top N cities in a country
-                    11 - Show top N cities in a district
-                    0 - Exit City Reports
+                    1 - Calculate world population
+                    2 - Calculate population of a continent
+                    3 - Calculate population of a region
+                    4 - Calculate population of a country
+                    5 - Calculate population of a district
+                    6 - Calculate population of a city
+                    7 - Calculate the population of people living in and not living in cities for a continent
+                    8 - Calculate the population of people living in and not living in cities for a region
+                    9 - Calculate the population of people living in and not living in cities for a country
+                    0 - Exit Population Reports
                     """);
 
             System.out.print("Enter choice: ");
@@ -70,9 +67,59 @@ public class Menu {
             switch (choice) {
                 case 1 -> {
 
+                    long worldPop = PopulationService.calculateWorldPopulation();
+                    System.out.print("World population: " + worldPop);
                 }
 
-                case 2 -> {}
+                case 2 -> {
+                    System.out.print("Enter continent name: ");
+                    String enteredContinent = scanner.nextLine();
+                    if (enteredContinent != null) {
+                        long continentPop = PopulationService.calculateContinentPopulation(enteredContinent);
+                        System.out.print(enteredContinent + " population: " + continentPop);
+                    } else
+                        System.out.println("continent not found.");
+                }
+
+                case 3 -> {
+                    System.out.print("Enter region name: ");
+                    String enteredRegion = scanner.nextLine();
+                    if (enteredRegion != null) {
+                        long regionPop = PopulationService.calculateRegionPopulation(enteredRegion);
+                        System.out.print(enteredRegion + " population: " + regionPop);
+                    } else
+                        System.out.println("region not found.");
+                }
+
+                case 4 -> {
+                    System.out.print("Enter country name: ");
+                    String enteredCountry = scanner.nextLine();
+                    if (enteredCountry != null) {
+                        long countryPop = PopulationService.calculateCountryPopulation(enteredCountry);
+                        System.out.print(enteredCountry + " population: " + countryPop);
+                    } else
+                        System.out.println("country not found.");
+                }
+
+                case 5 -> {
+                    System.out.print("Enter district name: ");
+                    String enteredDistrict = scanner.nextLine();
+                    if (enteredDistrict != null) {
+                        long districtPop = PopulationService.calculateDistrictPopulation(enteredDistrict);
+                        System.out.print(enteredDistrict + " population: " + districtPop);
+                    } else
+                        System.out.println("district not found.");
+                }
+
+                case 6 -> {
+                    System.out.print("Enter city name: ");
+                    String enteredCity = scanner.nextLine();
+                    if (enteredCity != null) {
+                        long cityPop = PopulationService.calculateCityPopulation(enteredCity);
+                        System.out.print(enteredCity + " population: " + cityPop);
+                    } else
+                        System.out.println("continent not found.");
+                }
 
                 case 0 -> {
                     populationExit = true;
