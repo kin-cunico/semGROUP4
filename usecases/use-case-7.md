@@ -8,7 +8,7 @@
 
 **Goal In Context**
 
-As a company employee, we need to be able to receive input from the user to rank countries by continent, population, region or language
+As a data analyst, we need to be able to receive input from the user to rank countries by continent, population, region or language
 
 ---
 
