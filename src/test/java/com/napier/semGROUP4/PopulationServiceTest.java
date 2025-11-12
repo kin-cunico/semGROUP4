@@ -60,9 +60,20 @@ public class PopulationServiceTest {
     @DisplayName("Check if an existing city population is not blank")
     void testCityPopulationValid() {
         Assumptions.assumeTrue(dbAvailable, "Database not available for testing");
-        long testCityPop = PopulationService.calculateCityPopulation('Edinburgh');
+        long testCityPop = PopulationService.calculateCityPopulation("Edinburgh");
         assertNotNull(testCityPop, "City population should not be null");
-        assertEquals(450180, "City name should match");
+        assertEquals(450180, "City population name should match");
         assertTrue(testCityPop > 0, "Population should be positive");
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Check if an existing country population is not blank")
+    void testCountryPopulationValid() {
+        Assumptions.assumeTrue(dbAvailable, "Database not available for testing");
+        long testCountryPop = PopulationService.calculateCountryPopulation("Germany");
+        assertNotNull(testCountryPop, "Country population should not be null");
+        assertEquals(82164700, "Country population should match");
+        assertTrue(testCountryPop > 0, "Population should be positive");
     }
 }
