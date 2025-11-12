@@ -19,7 +19,7 @@ services:
     restart: always
     ports:
       # fallback port for app and database
-      - "3306:3306"
+      - "33060:3306"
     # shared bridge between app and database
     networks:
       - semgroup4
@@ -38,7 +38,10 @@ services:
       # added so that the app only starts AFTER the database container is up and running
       start_period: 40s
       retries: 10
-    restart: always
+    # We need to note this because this might break our app
+    restart: on-failure
+    stdin_open: true
+    tty: true
     # app container will only start if database container passes the healthcheck
     depends_on:
       db:

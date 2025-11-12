@@ -1,82 +1,43 @@
 package com.napier.semGROUP4;
-import java.sql.*;
+
+import com.napier.semGROUP4.helper.DatabaseHelper;
+import com.napier.semGROUP4.menu.Menu;
+
+/**
+ * Main entry point for the application.
+ * Connects to the database and starts the main menu.
+ */
 public class App {
 
-    // initializing the connection to null
-    private Connection con = null;
-
-    // connect to database method TODO: create a class that handles utilities
-    public void connectDB() {
-
-        // tries to load sql driver for job
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
-            System.exit(-1);
-        }
-        // number of times app should try to connect to database
-        int retries = 30;
-
-        // loop for trying to connect to database
-        // TODO: this method is a copy paste from our lab3, we should plan a method that just keeps the connection open
-        for (int i = 0; i < retries; i++) {
-            System.out.println("Trying to connect to database...");
-
-            try {
-
-                // waits 3 seconds before trying to assign connection
-                Thread.sleep(3000);
-
-                // assigns user and password to connection to connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "semgroup4");
-                System.out.println("Connected to database!");
-
-                // wait 100ms to exit this trial
-                Thread.sleep(100);
-            }
-            catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
-            }
-            catch (InterruptedException ie) {
-                System.out.println("Interrupted? Check code.");
-            }
-        }
-    }
-
-
-    // close database connection method
-    // TODO: as with our connection method, we should move this into a class that handle utilities
-    public void closeDB() {
-
-        // if our connection is null we try to close it
-        if (con != null) {
-            try {
-                con.close();
-            }
-            catch (Exception e)
-            {
-                System.out.println("Error closing connection " + e);
-            }
-        }
-    }
-
+    /**
+     * Starts the application, connects to the database,
+     * and opens the interactive menu.
+     *
+     * @param args optional command-line arguments:
+     *             host:port and connection delay (in milliseconds)
+     */
     public static void main(String[] args) {
 
-        // TODO: create a menu to pass user inputs to fetch from our database
-
-        // logs app initialisation
         System.out.println("Initialising app...");
+        DatabaseHelper db = new DatabaseHelper();
 
-        // creates an app object to start our methods
-        // TODO: since the methods should have their own class, we will need to change the object for that new class
-        App a = new App();
+        // If command-line args are supplied, use them; otherwise default to local.
+        if (args.length < 2) {
+            System.out.println("No command-line arguments found. Connecting to localhost for local debugging...");
+            db.connectDB("localhost:3306", 3000);
+        } else {
+            db.connectDB(args[0], Integer.parseInt(args[1]));
+        }
 
-        // call connectDB method on our app
-        a.connectDB();
+        // Run menu if connected
+        if (db.isConnected()) {
+            Menu menu = new Menu(db.getConnection());
+            menu.menuStart();
+        } else {
+            System.out.println("Database connection failed. Exiting...");
+        }
 
-        // call closeDB method on our app
-        a.closeDB();
+        db.closeDB();
+        System.out.println("Application finished.");
     }
 }
