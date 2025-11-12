@@ -8,7 +8,7 @@
 
 **Goal In Context**
 
-As a company employee, we need to be able to organise the capital cities by world, region, continent and filter by population
+As a data analyst, we need to be able to organise the capital cities by world, region, continent and filter by population
 
 ---
 

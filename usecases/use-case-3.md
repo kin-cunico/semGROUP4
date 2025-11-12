@@ -8,7 +8,7 @@
 
 **Goal In Context**
 
-As a company employee we need to be able to produce a report on a given capital city with details
+As a data analyst, we need to be able to produce a report on a given capital city with details
 
 ---
 
