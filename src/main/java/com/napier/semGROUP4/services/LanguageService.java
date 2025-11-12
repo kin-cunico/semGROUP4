@@ -20,8 +20,13 @@ public class LanguageService {
     public LanguageService(Connection con) {
         this.con = con;
     }
-
-
+    /**
+     * Retrieves information about a specific language, including
+     * the total number of speakers and their percentage of the world population.
+     *
+     * @param language the name of the language to search for
+     * @return a Language object with details if found, otherwise null
+     */
     public Language getLanguage(String language) {
         try {
             // Write the SQL query to find the language, including its country name

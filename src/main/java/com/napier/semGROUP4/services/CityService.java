@@ -31,19 +31,13 @@ public class CityService {
      */
     public City getCity(String cityName) {
         try {
-            // Create a statement to send SQL commands to the database
             Statement stmt = con.createStatement();
-
-            // Write the SQL query to find the city, including its country name
             String strSelect = "SELECT city.Name, country.Name AS Country, city.District, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.CountryCode = country.Code " +
                     "WHERE city.Name = '" + cityName + "'";
-
-            // Run the query and store the results
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // If we find a result, fill a City object with the data
             if (rset.next()) {
                 City city = new City();
                 city.name = rset.getString("Name");
@@ -52,17 +46,20 @@ public class CityService {
                 city.population = rset.getInt("Population");
                 return city;
             } else {
-                // If no city was found with that name, return null
                 return null;
             }
 
         } catch (Exception e) {
-            // If something goes wrong, show an error message
             System.out.println("Error getting city details: " + e.getMessage());
             return null;
         }
     }
 
+    /**
+     * Retrieves all cities in the world, ordered by population in descending order.
+     *
+     * @return a list of all City objects in the world
+     */
     public List<City> getAllCitiesInWorld() {
         List<City> cities = new ArrayList<>();
 
@@ -89,6 +86,12 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves all cities within a specified continent.
+     *
+     * @param continent the name of the continent
+     * @return a list of City objects within that continent
+     */
     public List<City> getCitiesInContinent(String continent) {
         List<City> cities = new ArrayList<>();
 
@@ -119,6 +122,12 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves all cities within a specified region.
+     *
+     * @param region the name of the region
+     * @return a list of City objects within that region
+     */
     public List<City> getCitiesInRegion(String region) {
         List<City> cities = new ArrayList<>();
 
@@ -149,6 +158,12 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves all cities within a specified country.
+     *
+     * @param countryName the name of the country
+     * @return a list of City objects within that country
+     */
     public List<City> getCitiesInCountry(String countryName) {
         List<City> cities = new ArrayList<>();
 
@@ -179,6 +194,12 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves all cities within a specified district.
+     *
+     * @param district the name of the district
+     * @return a list of City objects within that district
+     */
     public List<City> getCitiesInDistrict(String district) {
         List<City> cities = new ArrayList<>();
 
@@ -209,6 +230,12 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves the top N most populated cities in the world.
+     *
+     * @param n the number of top cities to return
+     * @return a list of the top N City objects in the world
+     */
     public List<City> getTopNCitiesInWorld(int n) {
         List<City> cities = new ArrayList<>();
 
@@ -239,6 +266,13 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves the top N most populated cities within a continent.
+     *
+     * @param continent the continent to search within
+     * @param n the number of top cities to return
+     * @return a list of the top N City objects within the specified continent
+     */
     public List<City> getTopNCitiesInContinent(String continent, int n) {
         List<City> cities = new ArrayList<>();
 
@@ -271,6 +305,13 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves the top N most populated cities within a region.
+     *
+     * @param region the region to search within
+     * @param n the number of top cities to return
+     * @return a list of the top N City objects within the specified region
+     */
     public List<City> getTopNCitiesInRegion(String region, int n) {
         List<City> cities = new ArrayList<>();
 
@@ -303,6 +344,13 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Retrieves the top N most populated cities within a country.
+     *
+     * @param country the name of the country
+     * @param n the number of top cities to return
+     * @return a list of the top N City objects within the specified country
+     */
     public List<City> getTopNCitiesInCountry(String country, int n) {
         List<City> cities = new ArrayList<>();
 
@@ -335,6 +383,11 @@ public class CityService {
         return cities;
     }
 
+    /**
+     * Displays a formatted table of city information in the console.
+     *
+     * @param cities the list of City objects to display
+     */
     public void displayCities(List<City> cities) {
         if (cities == null || cities.isEmpty()) {
             System.out.println("No cities found.");
@@ -351,6 +404,13 @@ public class CityService {
         }
     }
 
+    /**
+     * Retrieves the top N most populated cities within a district.
+     *
+     * @param district the district name
+     * @param n the number of top cities to return
+     * @return a list of the top N City objects within the specified district
+     */
     public List<City> getTopNCitiesInDistrict(String district, int n) {
         List<City> cities = new ArrayList<>();
 
@@ -382,9 +442,4 @@ public class CityService {
 
         return cities;
     }
-
-
-
-
-
 }

@@ -7,6 +7,12 @@ import com.napier.semGROUP4.menu.Menu;
  * Main application entry point.
  */
 public class App {
+    /**
+     * The main method that initializes the application,
+     * connects to the database, and starts the console menu.
+     *
+     * @param args command-line arguments for database connection
+     */
     public static void main(String[] args) {
 
         System.out.println("Initialising app...");
