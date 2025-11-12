@@ -96,7 +96,7 @@ public class Menu {
                     System.out.print("Enter continent name: ");
                     String continent = scanner.nextLine();
                     System.out.print("Enter number of continents to show: ");
-                    Integer listSize = Integer.parseInt(scanner.nextLine());
+                    int listSize = Integer.parseInt(scanner.nextLine());
                     capitalCityService.displayCapitalCities(capitalCityService.continentTopPopulatedCapitals(continent, listSize));
                 }
 
@@ -104,7 +104,7 @@ public class Menu {
                     System.out.print("Enter region name: ");
                     String region = scanner.nextLine();
                     System.out.print("Enter number of regions to show: ");
-                    Integer listSize = Integer.parseInt(scanner.nextLine());
+                    int listSize = Integer.parseInt(scanner.nextLine());
                     capitalCityService.displayCapitalCities(capitalCityService.regionTopPopulatedCapitals(region, listSize));
                 }
 

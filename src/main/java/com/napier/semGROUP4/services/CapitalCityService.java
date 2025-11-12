@@ -122,7 +122,7 @@ public class CapitalCityService {
                     "FROM country " +
                     "JOIN city ON country.Capital  = city.ID " +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT '" +listSize + "'";
+                    "LIMIT " + listSize;
 
             ResultSet rset = stmt.executeQuery(sql);
 
