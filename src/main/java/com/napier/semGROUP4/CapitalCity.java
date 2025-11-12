@@ -2,6 +2,9 @@ package com.napier.semGROUP4;
 
 // Represents a Capital City
 
+/**
+ * Represents a capital city with its name, country, and population.
+ */
 public class CapitalCity {
 
     // Variables
@@ -15,17 +18,38 @@ public class CapitalCity {
     // Population of City
     public int population;
 
+    /**
+     * Gets the capital city's name.
+     *
+     * @return the name of the capital city
+     */
     public String getName() {
         return this.name;
     }
+
+    /**
+     * Gets the country the capital city belongs to.
+     *
+     * @return the country's name
+     */
     public String getCountry() {
         return this.country;
     }
 
+    /**
+     * Gets the population of the capital city.
+     *
+     * @return the population number
+     */
     public int getPopulation() {
         return this.population;
     }
 
+    /**
+     * Returns a formatted string showing the capital city's details.
+     *
+     * @return formatted string with name, country, and population
+     */
     @Override
     public String toString() {
         return """
