@@ -19,7 +19,7 @@ public class CapitalCity {
     public int population;
 
     /**
-     * Gets the capital city's name.
+     * Retrieves the capital city's name.
      *
      * @return the name of the capital city
      */
@@ -28,27 +28,27 @@ public class CapitalCity {
     }
 
     /**
-     * Gets the country the capital city belongs to.
+     * Retrieves the country the capital city belongs to.
      *
-     * @return the country's name
+     * @return the name of the country
      */
     public String getCountry() {
         return this.country;
     }
 
     /**
-     * Gets the population of the capital city.
+     * Retrieves the population of the capital city.
      *
-     * @return the population number
+     * @return the population of the city
      */
     public int getPopulation() {
         return this.population;
     }
 
     /**
-     * Returns a formatted string showing the capital city's details.
+     * Returns a formatted string representation of the capital city.
      *
-     * @return formatted string with name, country, and population
+     * @return a string containing the city's name, country, and population
      */
     @Override
     public String toString() {
@@ -59,3 +59,4 @@ public class CapitalCity {
                 """.formatted(this.getName(), this.getCountry(), this.getPopulation()) ;
     }
 }
+

@@ -71,4 +71,12 @@ public class LanguageServiceTest {
         Language language = languageService.getLanguage("fakelanguage");
         assertNull(language, "Invalid language should return null");
     }
+
+    @Test
+    @Order(3)
+    @DisplayName("Get Organisation languages")
+    void testGetOrganisationLanguages() {
+        Assumptions.assumeTrue(dbAvailable, "Database not available for testing");
+        assertEquals(5, languageService.getOrgLanguages());
+    }
 }

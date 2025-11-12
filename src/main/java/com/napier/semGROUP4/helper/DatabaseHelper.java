@@ -14,6 +14,9 @@ public class DatabaseHelper {
     /**
      * Connects to a database with configurable location and delay.
      * Example: connectDB("localhost:3306", 3000)
+     *
+     * @param location the database host and port (e.g., "localhost:3306")
+     * @param delay the delay in milliseconds between connection retries
      */
     public void connectDB(String location, int delay) {
         try {
@@ -50,12 +53,16 @@ public class DatabaseHelper {
         }
     }
 
-    /** Default connect for local debug (localhost:3306, 3s delay) */
+    /**
+     * Default connection for local debugging (connects to localhost:3306 with a 3s delay).
+     */
     public void connectDB() {
         connectDB("localhost:3306", 3000);
     }
 
-    /** Closes the database connection. */
+    /**
+     * Closes the database connection if one is active.
+     */
     public void closeDB() {
         if (con != null) {
             try {
@@ -68,10 +75,20 @@ public class DatabaseHelper {
         }
     }
 
+    /**
+     * Retrieves the current active database connection.
+     *
+     * @return the active Connection object, or null if not connected
+     */
     public Connection getConnection() {
         return this.con;
     }
 
+    /**
+     * Checks whether the database connection is active.
+     *
+     * @return true if connected to the database, otherwise false
+     */
     public boolean isConnected() {
         return this.connected;
     }

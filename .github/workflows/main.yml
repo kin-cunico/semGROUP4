@@ -1,11 +1,5 @@
 name: Build, Test (with MySQL), and Package
-on:
-  push:
-    branches:
-      - master
-      - development-city-class
-      - main
-      - lab07
+on: push
 
 jobs:
   test:

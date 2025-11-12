@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.napier.semGROUP4.CapitalCity;
 import com.napier.semGROUP4.City;
+import com.napier.semGROUP4.queries.Language;
 import com.napier.semGROUP4.services.CapitalCityService;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
@@ -145,8 +146,7 @@ public class Menu {
             System.out.println("""
                     --- Language Reports ---
                     1 - Get a language report
-                    2 - Show top 5 languages in the world
-                    3 - Show Organisation Languages
+                    2 - Show Organisation Languages Report
                     
                     0 - Exit Language Reports
                     """);
@@ -155,16 +155,39 @@ public class Menu {
 
 
             switch (choice) {
+                case 1 -> {
+                    System.out.println("Type a language: ");
+                    String languageName = scanner.nextLine();
+                    Language language = languageService.getLanguage(languageName);
 
+                    if (language != null) {
+                        System.out.println(language);
+                    }
+                    else {
+                        System.out.println("Language not found.");
+                    }
+
+                }
+                case 2 -> {
+                    System.out.println("--- Organisation languages: ");
+                    languageService.getOrgLanguages();
+                }
+
+                case 0 -> {
+                    languageExit = true;
+                    System.out.println("Exiting Language Reports...");
+                }
+                default -> System.out.println("Invalid option. Try again.");
             }
         }
     }
 
     /**
-     * Displays and handles the City Reports submenu,
-     * including queries by name, location filters, and top-N lists.
+     * Displays and manages the city report submenu.
+     * Provides multiple options for querying and listing cities
+     * by continent, region, country, district, or population rank.
      *
-     * @param scanner scanner used for user input
+     * @param scanner the Scanner instance used for reading user input
      */
     private void cityReportMenu(Scanner scanner) {
         boolean cityExit = false;

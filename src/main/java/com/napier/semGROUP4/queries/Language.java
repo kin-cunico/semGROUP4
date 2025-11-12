@@ -65,4 +65,13 @@ public class Language {
     public void setPercentageOfSpeakers(double percentageOfSpeakers) {
         this.percentageOfSpeakers = percentageOfSpeakers;
     }
+
+    @Override
+    public String toString(){
+        return """
+                Language: %s,
+                Native speakers: %d,
+                Percentage of World Population: %f,
+                """.formatted(this.getName(), this.getNumOfSpeakers(), this.getPercentageOfSpeakers());
+    }
 }
