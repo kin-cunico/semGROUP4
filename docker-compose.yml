@@ -19,7 +19,7 @@ services:
     restart: always
     ports:
       # fallback port for app and database
-      - "33060:3306"
+      - "3306:3306"
     # shared bridge between app and database
     networks:
       - semgroup4
@@ -33,7 +33,7 @@ services:
   app:
     build: .
     healthcheck:
-      test: ["CMD", "ping", "-h", "localhost"]
+      test: ["CMD", "curl", "-h", "localhost"]
       interval: 50s
       # added so that the app only starts AFTER the database container is up and running
       start_period: 40s
