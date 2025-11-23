@@ -30,6 +30,23 @@ public class Menu {
         this.capitalCityService = new CapitalCityService(con);
     }
 
+    public void menuSample() {
+        String cityName = "Edinburgh";
+        String languageName = "Arabic";
+        String continentName = "Asia";
+        System.out.println("Printing sample to show app is working...");
+        System.out.println("---- \n");
+        City city = cityService.getCity(cityName);
+        System.out.println(city);
+        System.out.println("---- \n");
+        Language language = languageService.getLanguage(languageName);
+        System.out.println(language);
+        System.out.println("---- \n");
+        System.out.println(capitalCityService.getAllCapitalsInContinent(continentName));
+        System.out.println("---- \n");
+        System.out.println("Exiting app...");
+    }
+
     /**
      * Starts the main menu loop, routing to city, language,
      * or capital city report submenus until the user exits.
