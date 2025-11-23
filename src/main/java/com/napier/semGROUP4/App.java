@@ -2,6 +2,9 @@ package com.napier.semGROUP4;
 
 import com.napier.semGROUP4.helper.DatabaseHelper;
 import com.napier.semGROUP4.menu.Menu;
+import com.napier.semGROUP4.services.CityService;
+
+import java.sql.Connection;
 
 /**
  * Main entry point for the application.
@@ -20,6 +23,7 @@ public class App {
 
         System.out.println("Initialising app...");
         DatabaseHelper db = new DatabaseHelper();
+        Connection con = null;
 
         // If command-line args are supplied, use them; otherwise default to local.
         if (args.length < 2) {
@@ -32,7 +36,8 @@ public class App {
         // Run menu if connected
         if (db.isConnected()) {
             Menu menu = new Menu(db.getConnection());
-            menu.menuStart();
+            menu.menuSample();
+
         } else {
             System.out.println("Database connection failed. Exiting...");
         }
