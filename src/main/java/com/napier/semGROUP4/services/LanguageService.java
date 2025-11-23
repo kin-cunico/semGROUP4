@@ -1,7 +1,6 @@
 package com.napier.semGROUP4.services;
 
-import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.queries.Language;
+import com.napier.semGROUP4.queriesClasses.Language;
 
 import java.sql.*;
 import java.util.ArrayList;

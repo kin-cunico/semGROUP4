@@ -1,4 +1,4 @@
-package com.napier.semGROUP4;
+package com.napier.semGROUP4.queriesClasses;
 
 /**
  * Represents a city with its name, country, district, and population.

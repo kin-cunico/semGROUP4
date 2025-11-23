@@ -1,4 +1,4 @@
-package com.napier.semGROUP4.queries;
+package com.napier.semGROUP4.queriesClasses;
 
 /**
  * Represents a language with its name, number of speakers,

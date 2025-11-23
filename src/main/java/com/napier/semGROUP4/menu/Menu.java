@@ -3,9 +3,8 @@ package com.napier.semGROUP4.menu;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import com.napier.semGROUP4.CapitalCity;
-import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.queries.Language;
+import com.napier.semGROUP4.queriesClasses.City;
+import com.napier.semGROUP4.queriesClasses.Language;
 import com.napier.semGROUP4.services.CapitalCityService;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
