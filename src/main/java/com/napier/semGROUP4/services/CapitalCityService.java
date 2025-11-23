@@ -1,7 +1,6 @@
 package com.napier.semGROUP4.services;
 
-import com.napier.semGROUP4.CapitalCity;
-import com.napier.semGROUP4.City;
+import com.napier.semGROUP4.queriesClasses.CapitalCity;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

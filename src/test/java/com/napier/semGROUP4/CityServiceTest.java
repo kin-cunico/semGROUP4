@@ -1,5 +1,6 @@
 package com.napier.semGROUP4;
 
+import com.napier.semGROUP4.queriesClasses.City;
 import com.napier.semGROUP4.services.CityService;
 import org.junit.jupiter.api.*;
 import java.sql.*;

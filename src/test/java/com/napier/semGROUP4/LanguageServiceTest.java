@@ -1,6 +1,6 @@
 package com.napier.semGROUP4;
 
-import com.napier.semGROUP4.queries.Language;
+import com.napier.semGROUP4.queriesClasses.Language;
 import com.napier.semGROUP4.services.LanguageService;
 import org.junit.jupiter.api.*;
 

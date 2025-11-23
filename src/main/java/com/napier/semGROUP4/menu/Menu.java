@@ -3,9 +3,8 @@ package com.napier.semGROUP4.menu;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import com.napier.semGROUP4.CapitalCity;
-import com.napier.semGROUP4.City;
-import com.napier.semGROUP4.queries.Language;
+import com.napier.semGROUP4.queriesClasses.City;
+import com.napier.semGROUP4.queriesClasses.Language;
 import com.napier.semGROUP4.services.CapitalCityService;
 import com.napier.semGROUP4.services.CityService;
 import com.napier.semGROUP4.services.LanguageService;
@@ -28,6 +27,23 @@ public class Menu {
         this.cityService = new CityService(con);
         this.languageService = new LanguageService(con);
         this.capitalCityService = new CapitalCityService(con);
+    }
+
+    public void menuSample() {
+        String cityName = "Edinburgh";
+        String languageName = "Arabic";
+        String continentName = "Asia";
+        System.out.println("Printing sample to show app is working...");
+        System.out.println("---- \n");
+        City city = cityService.getCity(cityName);
+        System.out.println(city);
+        System.out.println("---- \n");
+        Language language = languageService.getLanguage(languageName);
+        System.out.println(language);
+        System.out.println("---- \n");
+        System.out.println(capitalCityService.getAllCapitalsInContinent(continentName));
+        System.out.println("---- \n");
+        System.out.println("Exiting app...");
     }
 
     /**
