@@ -46,6 +46,10 @@ public class Menu {
         System.out.println("---- \n");
         System.out.println(countryService.getAllCountriesByPop());
         System.out.println("---- \n");
+        System.out.println(countryService.getAllCountriesInCont("Oceania"));
+        System.out.println("---- \n");
+        System.out.println(countryService.getAllCountriesByRegion("Central"));
+        System.out.println("---- \n");
         System.out.println("Exiting app...");
     }
 
