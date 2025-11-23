@@ -66,6 +66,7 @@ public class PopulationServiceTest {
         assertTrue(testCityPop > 0, "Population should be positive");
     }
 
+
     @Test
     @Order(2)
     @DisplayName("Check if an existing country population is not blank")
