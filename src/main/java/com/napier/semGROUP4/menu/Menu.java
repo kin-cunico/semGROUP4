@@ -35,7 +35,6 @@ public class Menu {
     public void menuSample() {
         String cityName = "Edinburgh";
         String languageName = "Arabic";
-        String continentName = "Asia";
         System.out.println("Printing sample to show app is working...");
         System.out.println("---- \n");
         City city = cityService.getCity(cityName);
@@ -49,6 +48,8 @@ public class Menu {
         System.out.println(countryService.getAllCountriesInCont("Oceania", 4));
         System.out.println("---- \n");
         System.out.println(countryService.getAllCountriesByRegion("Central", 4));
+        System.out.println("---- \n");
+        System.out.println(languageService.getOrgLanguages());
         System.out.println("---- \n");
         System.out.println("Exiting app...");
     }
