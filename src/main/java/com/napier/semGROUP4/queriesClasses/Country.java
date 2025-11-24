@@ -65,11 +65,13 @@ public class Country {
     @Override
     public String toString() {
         return """
+                --------------
                 Name: %s,
                 Capital: %s,
                 Continent: %s,
                 Region: %s,
                 Population: %d
-                """.formatted(this.getName(), this.getCapital(), this.getContinent(), this.getRegion(), this.getPopulation()) ;
+                --------------
+                """.formatted(this.getName(), this.getCapital(), this.getContinent(), this.getRegion(), this.getPopulation());
     }
 }

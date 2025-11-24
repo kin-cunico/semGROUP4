@@ -14,15 +14,18 @@ public class CountryService {
     public CountryService(Connection aCon) {this.con = aCon;
     }
 
-    public ArrayList<Country> getAllCountriesByPop() {
+    public ArrayList<Country> getAllCountriesByPop(int aLimit) {
 
+        if (aLimit == 0) {
+            aLimit = 10;
+        }
         ArrayList<Country> countriesList = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
             String sql = "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital FROM country " +
                     "JOIN city ON country.capital = city.ID " +
                     "ORDER BY country.population " +
-                    "DESC LIMIT 5;";
+                    "DESC LIMIT " + aLimit + ";";
             ResultSet rset = stmt.executeQuery(sql);
 
             while (rset.next()) {
@@ -44,7 +47,7 @@ public class CountryService {
         return countriesList;
     };
 
-    public ArrayList<Country> getAllCountriesInCont(String aContinent) {
+    public ArrayList<Country> getAllCountriesInCont(String aContinent, int aLimit) {
         ArrayList<Country> countriesListByCont = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
@@ -52,7 +55,7 @@ public class CountryService {
                     "JOIN city ON country.capital = city.ID " +
                     "WHERE  country.Continent = '" +  aContinent +
                     "' ORDER BY country.population " +
-                    "DESC LIMIT 5;";
+                    "DESC LIMIT " + aLimit + ";";
             ResultSet rset = stmt.executeQuery(sql);
 
             while (rset.next()) {
@@ -74,7 +77,7 @@ public class CountryService {
         return countriesListByCont;
     }
 
-    public ArrayList<Country> getAllCountriesByRegion(String aRegion) {
+    public ArrayList<Country> getAllCountriesByRegion(String aRegion, int aLimit) {
         ArrayList<Country> countriesListByCont = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
@@ -82,7 +85,7 @@ public class CountryService {
                     "JOIN city ON country.capital = city.ID " +
                     "WHERE  country.Region LIKE '%" +  aRegion +
                     "%' ORDER BY country.population " +
-                    "DESC LIMIT 5;";
+                    "DESC LIMIT " + aLimit + ";";
             ResultSet rset = stmt.executeQuery(sql);
 
             while (rset.next()) {

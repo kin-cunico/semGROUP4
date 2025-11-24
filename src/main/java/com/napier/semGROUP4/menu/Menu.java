@@ -44,11 +44,11 @@ public class Menu {
         Language language = languageService.getLanguage(languageName);
         System.out.println(language);
         System.out.println("---- \n");
-        System.out.println(countryService.getAllCountriesByPop());
+        System.out.println(countryService.getAllCountriesByPop(5));
         System.out.println("---- \n");
-        System.out.println(countryService.getAllCountriesInCont("Oceania"));
+        System.out.println(countryService.getAllCountriesInCont("Oceania", 4));
         System.out.println("---- \n");
-        System.out.println(countryService.getAllCountriesByRegion("Central"));
+        System.out.println(countryService.getAllCountriesByRegion("Central", 4));
         System.out.println("---- \n");
         System.out.println("Exiting app...");
     }
