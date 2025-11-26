@@ -28,6 +28,11 @@ public class City
 
     public City () {
     }
+    /**
+     * Gets the city name
+     *
+     * @return the name of a city
+     */
 
     public String getName() {
         return this.name;

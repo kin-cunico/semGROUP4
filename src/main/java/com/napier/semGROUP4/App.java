@@ -4,9 +4,16 @@ import com.napier.semGROUP4.helper.DatabaseHelper;
 import com.napier.semGROUP4.menu.Menu;
 
 /**
- * Main application entry point.
+ * Main app class that starts everything up.
  */
 public class App {
+
+    /**
+     * Runs the program, connects to the database, and opens the menu.
+     *
+     * @param args optional command-line args:
+     *             [0] = host:port, [1] = delay in ms
+     */
     public static void main(String[] args) {
 
         System.out.println("Initialising app...");
