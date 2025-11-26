@@ -2,8 +2,17 @@ package com.napier.semGROUP4;
 
 import com.napier.semGROUP4.helper.DatabaseHelper;
 
+/**
+ * Main application class for testing database access and city lookups.
+ */
 public class App {
 
+    /**
+     * Starts the app, connects to the database, tests CityService,
+     * and then closes the connection.
+     *
+     * @param args command-line arguments (not used yet)
+     */
     public static void main(String[] args) {
 
         // TODO: create a menu to pass user inputs to fetch from our database
