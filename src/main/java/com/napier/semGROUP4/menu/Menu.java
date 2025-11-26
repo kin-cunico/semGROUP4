@@ -5,10 +5,8 @@ import java.util.Scanner;
 
 import com.napier.semGROUP4.queriesClasses.City;
 import com.napier.semGROUP4.queriesClasses.Language;
-import com.napier.semGROUP4.services.CapitalCityService;
-import com.napier.semGROUP4.services.CityService;
-import com.napier.semGROUP4.services.CountryService;
-import com.napier.semGROUP4.services.LanguageService;
+import com.napier.semGROUP4.queriesClasses.Population;
+import com.napier.semGROUP4.services.*;
 
 /**
  * Console menu for user interaction.
@@ -19,6 +17,7 @@ public class Menu {
     private final CapitalCityService capitalCityService;
     private final LanguageService languageService;
     private final CountryService countryService;
+    private final PopulationService populationService;
 
     /**
      * Initializes the menu with city, language, and capital city services.
@@ -30,6 +29,7 @@ public class Menu {
         this.languageService = new LanguageService(con);
         this.capitalCityService = new CapitalCityService(con);
         this.countryService = new CountryService(con);
+        this.populationService = new PopulationService(con);
     }
 
     public void menuSample() {
@@ -68,6 +68,7 @@ public class Menu {
                     1 - Query a city
                     2 - Query a language
                     3 - Query a Capital city :DDDDDD
+                    4 - Query Population
                     0 - Exit query menu
                     """);
 
@@ -78,6 +79,7 @@ public class Menu {
                 case 1 -> cityReportMenu(scanner);
                 case 2 -> languageReportMenu(scanner);
                 case 3 -> capitalCityReportMenu(scanner);
+                case 4 -> populationReportMenu(scanner);
                 case 0 -> {
                     exit = true;
                     System.out.println("Exiting query menu...");
@@ -316,4 +318,150 @@ public class Menu {
             }
         }
     }
+
+    private void populationReportMenu(Scanner scanner) {
+        boolean populationExit = false;
+
+        while (!populationExit) {
+            System.out.println("""
+                    --- population Reports ---
+                    1 - Calculate world population
+                    2 - Calculate population of a continent
+                    3 - Calculate population of a region
+                    4 - Calculate population of a country
+                    5 - Calculate population of a district
+                    6 - Calculate population of a city
+                    7 - Calculate the population of people living in and not living in cities for a continent
+                    8 - Calculate the population of people living in and not living in cities for a region
+                    9 - Calculate the population of people living in and not living in cities for a country
+                    0 - Exit Population Reports
+                    """);
+
+            System.out.print("Enter choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+                case 1 -> {
+
+                    long worldPop = populationService.calculateWorldPopulation();
+                    System.out.print("World population: " + worldPop);
+                    System.out.println();
+                }
+
+                case 2 -> {
+                    System.out.print("Enter continent name: ");
+                    String enteredContinent = scanner.nextLine();
+                    if (enteredContinent != null) {
+                        long continentPop = populationService.calculateContinentPopulation(enteredContinent);
+                        System.out.print(enteredContinent + " population: " + continentPop);
+                        System.out.println();
+                    } else
+                        System.out.println("continent not found.");
+                }
+
+                case 3 -> {
+                    System.out.print("Enter region name: ");
+                    String enteredRegion = scanner.nextLine();
+                    if (enteredRegion != null) {
+                        long regionPop = populationService.calculateRegionPopulation(enteredRegion);
+                        System.out.print(enteredRegion + " population: " + regionPop);
+                        System.out.println();
+                    } else
+                        System.out.println("region not found.");
+                }
+
+                case 4 -> {
+                    System.out.print("Enter country name: ");
+                    String enteredCountry = scanner.nextLine();
+                    if (enteredCountry != null) {
+                        long countryPop = populationService.calculateCountryPopulation(enteredCountry);
+                        System.out.print(enteredCountry + " population: " + countryPop);
+                        System.out.println();
+                    } else
+                        System.out.println("country not found.");
+                }
+
+                case 5 -> {
+                    System.out.print("Enter district name: ");
+                    String enteredDistrict = scanner.nextLine();
+                    if (enteredDistrict != null) {
+                        long districtPop = populationService.calculateDistrictPopulation(enteredDistrict);
+                        System.out.print(enteredDistrict + " population: " + districtPop);
+                        System.out.println();
+                    } else
+                        System.out.println("district not found.");
+                }
+
+                case 6 -> {
+                    System.out.print("Enter city name: ");
+                    String enteredCity = scanner.nextLine();
+                    if (enteredCity != null) {
+                        long cityPop = populationService.calculateCityPopulation(enteredCity);
+                        System.out.print(enteredCity + " population: " + cityPop);
+                        System.out.println();
+                    } else
+                        System.out.println("continent not found.");
+                }
+
+                case 7 -> {
+                    System.out.print("Enter continent: ");
+                    String enteredContinent = scanner.nextLine();
+                    if (enteredContinent != null) {
+                        Population stats = populationService.populationInContinent(enteredContinent);
+
+                        double inCityPercentage = stats.total > 0 ? (stats.inCity * 100 / stats.total) : 0;
+                        double outCityPercentage = stats.total > 0 ? (stats.outCity * 100 / stats.total) : 0;
+
+                        System.out.print("Total population in " + enteredContinent + " " + stats.getTotal());
+                        System.out.print(" The amount living in cities is: " + stats.getInCity() + " " + String.format("%.2f", inCityPercentage) + "%");
+                        System.out.print(" The amount not living in cities is: " + stats.getOutCity() + " " + String.format("%.2f", outCityPercentage) + "%");
+                        System.out.println();
+                    } else
+                        System.out.println("continent not found.");
+                }
+
+                case 8 -> {
+                    System.out.print("Enter region: ");
+                    String enteredRegion = scanner.nextLine();
+                    if (enteredRegion != null) {
+                        Population stats = populationService.populationInRegion(enteredRegion);
+
+                        double inCityPercentage = stats.total > 0 ? (stats.inCity * 100 / stats.total) : 0;
+                        double outCityPercentage = stats.total > 0 ? (stats.outCity * 100 / stats.total) : 0;
+
+                        System.out.print("Total population in " + enteredRegion + " " + stats.getTotal());
+                        System.out.print(" The amount living in cities is: " + stats.getInCity() + " " + String.format("%.2f", inCityPercentage) + "%");
+                        System.out.print(" The amount not living in cities is: " + stats.getOutCity() + " " + String.format("%.2f", outCityPercentage) + "%");
+                        System.out.println();
+                    } else
+                        System.out.println("region not found.");
+                }
+
+                case 9 -> {
+                    System.out.print("Enter country: ");
+                    String enteredCountry = scanner.nextLine();
+                    if (enteredCountry != null) {
+                        Population stats = populationService.populationInCountry(enteredCountry);
+
+                        double inCityPercentage = stats.total > 0 ? (stats.inCity * 100 / stats.total) : 0;
+                        double outCityPercentage = stats.total > 0 ? (stats.outCity * 100 / stats.total) : 0;
+
+                        System.out.print("Total population in " + enteredCountry + " " + stats.getTotal());
+                        System.out.print(" The amount living in cities is: " + stats.getInCity() + " " + String.format("%.2f", inCityPercentage) + "%");
+                        System.out.print(" The amount not living in cities is: " + stats.getOutCity() + " " + String.format("%.2f", outCityPercentage) + "%");
+                        System.out.println();
+                    } else
+                        System.out.println("country not found.");
+                }
+
+                case 0 -> {
+                    populationExit = true;
+                    System.out.println("Exiting City Reports...");
+                }
+
+                default -> System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
 }
+
