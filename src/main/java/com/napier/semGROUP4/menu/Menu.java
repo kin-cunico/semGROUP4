@@ -42,7 +42,7 @@ public class Menu {
                     Please, choose an option below:
                     1 - Query a city
                     2 - Query a language
-                    3 - Query a Capital city :DDDDDD
+                    3 - Query a Capital City check
                     0 - Exit query menu
                     """);
 
@@ -103,14 +103,14 @@ public class Menu {
 
                 case 4 -> {
                     System.out.print("Enter how many top city capitals to show: ");
-                    capitalCityService.displayCapitalCities(capitalCityService.worldTopPopulatedCapitals(Integer.parseInt(scanner.nextLine())));
+                    capitalCityService.displayCapitalCities(capitalCityService.worldTopPopulatedCapitals(scanner.nextLine()));
                 }
 
                 case 5 -> {
                     System.out.print("Enter continent name: ");
                     String continent = scanner.nextLine();
                     System.out.print("Enter number of continents to show: ");
-                    int listSize = Integer.parseInt(scanner.nextLine());
+                    String listSize = scanner.nextLine();
                     capitalCityService.displayCapitalCities(capitalCityService.continentTopPopulatedCapitals(continent, listSize));
                 }
 
@@ -118,7 +118,7 @@ public class Menu {
                     System.out.print("Enter region name: ");
                     String region = scanner.nextLine();
                     System.out.print("Enter number of regions to show: ");
-                    int listSize = Integer.parseInt(scanner.nextLine());
+                    String listSize = scanner.nextLine();
                     capitalCityService.displayCapitalCities(capitalCityService.regionTopPopulatedCapitals(region, listSize));
                 }
 

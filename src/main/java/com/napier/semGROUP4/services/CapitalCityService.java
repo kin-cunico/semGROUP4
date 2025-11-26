@@ -113,7 +113,7 @@ public class CapitalCityService {
      *      [ 4 ] This Displays all the Capitals In a Continent
      */
 
-    public List<CapitalCity>  worldTopPopulatedCapitals(int listSize) {
+    public List<CapitalCity>  worldTopPopulatedCapitals(String listSize) {
         List<CapitalCity> CapitalCities = new ArrayList<>();
 
         try {
@@ -121,8 +121,8 @@ public class CapitalCityService {
             String sql = "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM country " +
                     "JOIN city ON country.Capital  = city.ID " +
-                    "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "ORDER BY city.Population DESC, city.Name ASC " +
+                    "LIMIT " + listSize + ";";
 
             ResultSet rset = stmt.executeQuery(sql);
 
@@ -144,7 +144,7 @@ public class CapitalCityService {
      *      [ 5 ] This Displays all the Capitals In a Continent
      */
 
-    public List<CapitalCity>   continentTopPopulatedCapitals(String continent, int listSize) {
+    public List<CapitalCity>   continentTopPopulatedCapitals(String continent, String listSize) {
         List<CapitalCity> CapitalCities = new ArrayList<>();
 
         try {
@@ -154,7 +154,7 @@ public class CapitalCityService {
                     "JOIN city ON country.Capital  = city.ID " +
                     "WHERE country.continent = '" + continent + "'" +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "LIMIT " + listSize + ";";
 
             ResultSet rset = stmt.executeQuery(sql);
 
@@ -176,7 +176,7 @@ public class CapitalCityService {
      *      [ 6 ] This Displays all the Capitals In a Continent
      */
 
-    public List<CapitalCity> regionTopPopulatedCapitals(String region, int listSize) {
+    public List<CapitalCity> regionTopPopulatedCapitals(String region, String listSize) {
         List<CapitalCity> CapitalCities = new ArrayList<>();
 
         try {
@@ -186,7 +186,8 @@ public class CapitalCityService {
                     "JOIN city ON country.Capital  = city.ID " +
                     "WHERE country.Region = '" + region + "'" +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "LIMIT " + listSize + ";";
+
 
             ResultSet rset = stmt.executeQuery(sql);
 
