@@ -6,7 +6,7 @@ jobs:
     name: Unit + Integration Tests
     runs-on: ubuntu-22.04
 
-    # 1️⃣ MySQL service (GitHub Actions–compatible)
+    #  MySQL service (GitHub Actions–compatible)
     services:
       mysql:
         image: mysql:8.0
@@ -22,21 +22,21 @@ jobs:
           --health-retries=15
 
     steps:
-      # 2️⃣ Checkout repo
+      #  Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: 'recursive'
 
-      # 3️⃣ Set up JDK 17
+      #  Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 4️⃣ Wait for MySQL to be ready
+      #  Wait for MySQL to be ready
       - name: Wait for MySQL to be healthy
         run: |
           for i in {1..40}; do
@@ -48,7 +48,7 @@ jobs:
             sleep 2
           done
 
-      # 5️⃣ Import world.sql dataset
+      #  Import world.sql dataset
       - name: Import world dataset
         run: |
           sudo apt-get update
@@ -65,28 +65,28 @@ jobs:
             exit 1
           fi
 
-      # 6️⃣ Run all tests (unit + integration)
+      #  Run all tests (unit + integration)
       - name: Run Unit + Integration Tests
         env:
           DB_HOST: 127.0.0.1
         run: mvn -B clean test
 
-      # 7️⃣ Generate JaCoCo coverage report
+      #  Generate JaCoCo coverage report
       - name: Generate JaCoCo Coverage Report
         run: mvn jacoco:report
 
-      # 8️⃣ Upload coverage artifact
+      #  Upload coverage artifact
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: target/site/jacoco
 
-      # 9️⃣ Package application JAR
+      #  Package application JAR
       - name: Package Application
         run: mvn -B -DskipTests package
 
-      # 🔟 Build summary
+      #  Build summary
       - name: Generate CI Summary
         run: |
           echo "## ✅ Build Summary" >> $GITHUB_STEP_SUMMARY
@@ -94,10 +94,12 @@ jobs:
           echo "- Tests passed ✅" >> $GITHUB_STEP_SUMMARY
           echo "- Coverage report generated: target/site/jacoco/index.html" >> $GITHUB_STEP_SUMMARY
 
-
+      # building and deploying
   build-and-deploy:
+    # should run after tests
     needs: test
     runs-on: ubuntu-22.04
+    # had to add permission to write to github
     permissions: write-all
     steps:
 

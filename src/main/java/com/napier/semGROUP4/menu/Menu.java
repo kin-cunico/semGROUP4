@@ -51,6 +51,9 @@ public class Menu {
         System.out.println("---- \n");
         System.out.println(languageService.getOrgLanguages());
         System.out.println("---- \n");
+        System.out.println("Asia");
+        System.out.println(populationService.populationInContinent("Asia"));
+        System.out.println("---- \n");
         System.out.println("Exiting app...");
     }
 

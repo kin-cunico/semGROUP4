@@ -121,7 +121,7 @@ public class CapitalCityService {
                     "FROM country " +
                     "JOIN city ON country.Capital  = city.ID " +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "LIMIT " + listSize +";";
 
             ResultSet rset = stmt.executeQuery(sql);
 
@@ -153,7 +153,7 @@ public class CapitalCityService {
                     "JOIN city ON country.Capital  = city.ID " +
                     "WHERE country.continent = '" + continent + "'" +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "LIMIT " + listSize +";";;
 
             ResultSet rset = stmt.executeQuery(sql);
 
@@ -185,7 +185,7 @@ public class CapitalCityService {
                     "JOIN city ON country.Capital  = city.ID " +
                     "WHERE country.Region = '" + region + "'" +
                     "ORDER BY city.Population DESC, city.Name ASC" +
-                    "LIMIT " + listSize;
+                    "LIMIT " + listSize +";";;
 
             ResultSet rset = stmt.executeQuery(sql);
 

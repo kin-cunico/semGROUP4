@@ -30,5 +30,14 @@ public class Population {
     public long getTotal() { return  total; }
     public long getInCity() { return inCity;}
     public long getOutCity() { return outCity; }
+
+    @Override
+    public String toString() {
+        return """
+                Total population: %d,
+                Living in cities: %d,
+                Living outside cities: %d
+                """.formatted(getTotal(), getInCity(), getOutCity());
+    }
 }
 
